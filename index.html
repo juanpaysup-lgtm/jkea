@@ -671,12 +671,12 @@
                     <p>Con Make.com (antes Integromat) puedes sincronizar automáticamente tus datos con Google Sheets sin necesidad de programación compleja.</p>
                     
                     <h3>Configuración Actual</h3>
-                    <p>Webhook URL: <strong id="currentWebhookUrl">https://hook.eu2.make.com/bnhk5ny1viui7oltga2w8ghg9of1vrmj</strong></p>
+                    <p>Webhook URL: <strong id="currentWebhookUrl">https://hook.eu2.make.com/bnhk5ny1viui7oltga2wghg9of1vrmj</strong></p>
                     <p>Estado: <strong id="makeStatusText">Conectado</strong></p>
                     
                     <div class="form-group">
                         <label for="makeWebhookUrl">URL del Webhook de Make.com (si necesitas cambiarlo)</label>
-                        <input type="url" id="makeWebhookUrl" placeholder="https://hook.make.com/..." value="https://hook.eu2.make.com/bnhk5ny1viui7oltga2w8ghg9of1vrmj">
+                        <input type="url" id="makeWebhookUrl" placeholder="https://hook.make.com/..." value="https://hook.eu2.make.com/bnhk5ny1viui7oltga2wghg9of1vrmj">
                     </div>
                     
                     <button id="saveMakeConfigBtn" class="secondary"><i class="fas fa-save"></i> Actualizar Configuración</button>
@@ -1004,7 +1004,7 @@ Plan contratado
 
     <script>
         // URL de Make.com Webhook
-        const MAKE_WEBHOOK_URL = 'https://hook.eu2.make.com/bnhk5ny1viui7oltga2w8ghg9of1vrmj';
+        const MAKE_WEBHOOK_URL = 'https://hook.eu2.make.com/bnhk5ny1viui7oltga2wghg9of1vrmj';
         
         document.addEventListener('DOMContentLoaded', function() {
             // Elementos DOM
@@ -1167,7 +1167,7 @@ Plan contratado
                 togglePriceFields();
             });
             
-            // Abrir modal para nuevo cliente
+            // Abrir modal para nuevo cliente - ¡ESTA ES LA FUNCIÓN IMPORTANTE!
             newClientBtn.addEventListener('click', function() {
                 // Mostrar modal para pegar información
                 pasteModal.style.display = 'flex';
@@ -2354,7 +2354,7 @@ Plan contratado
                     const li = document.createElement('li');
                     li.innerHTML = `
                         <div>
-                            <strong>${seller.name</strong>
+                            <strong>${seller.name}</strong>
                             <br>
                             <span>${seller.phone}</span>
                         </div>
