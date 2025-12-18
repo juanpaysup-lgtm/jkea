@@ -3,250 +3,584 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRM - Gestión de Clientes</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>JKEA INMOBILIARIA</title>
     <style>
-        :root {
-            --primary: #3498db;
-            --secondary: #2ecc71;
-            --accent: #e74c3c;
-            --warning: #f39c12;
-            --dark: #2c3e50;
-            --light: #ecf0f1;
-            --background: #f5f7fa;
-            --card-bg: #ffffff;
-            --text: #333333;
-            --text-secondary: #7f8c8d;
-            --border: #dcdde1;
-            --shadow: rgba(0, 0, 0, 0.1);
-        }
-
-        [data-theme="dark"] {
-            --background: #1a1a1a;
-            --card-bg: #2d2d2d;
-            --text: #f5f5f5;
-            --text-secondary: #bdc3c7;
-            --border: #404040;
-            --shadow: rgba(0, 0, 0, 0.3);
-        }
-
+        /* RESET Y ESTILOS GLOBALES */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: background-color 0.3s, color 0.3s;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --text-color: #333;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --radius: 10px;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--background);
-            color: var(--text);
+            background-color: #f5f7fa;
+            color: var(--text-color);
             line-height: 1.6;
+            min-height: 100vh;
+            padding-top: 70px; /* Para el header fijo */
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 15px;
         }
 
-        header {
+        /* HEADER Y NAVEGACIÓN RESPONSIVA */
+        .main-header {
+            background: white;
+            box-shadow: var(--shadow);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            padding: 15px 0;
+        }
+
+        /* Logo */
+        .logo-section {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        h1, h2, h3, h4 {
-            color: var(--primary);
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 10px;
+            text-decoration: none;
         }
 
         .logo-icon {
-            font-size: 24px;
-            color: var(--primary);
-        }
-
-        .controls {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        button {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            background-color: var(--primary);
+            background: var(--secondary-color);
             color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: 5px;
+            justify-content: center;
+            font-size: 1.5rem;
         }
 
-        button:hover {
-            opacity: 0.9;
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
         }
 
-        button.secondary {
-            background-color: var(--secondary);
+        .logo-text span {
+            color: var(--secondary-color);
         }
 
-        button.accent {
-            background-color: var(--accent);
+        /* Menú hamburguesa para móviles */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
         }
 
-        button.warning {
-            background-color: var(--warning);
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 3px;
+            transition: 0.3s;
         }
 
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px var(--shadow);
+        /* Navegación */
+        .nav-section {
+            padding-top: 15px;
         }
 
-        .form-group {
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .nav-btn {
+            padding: 12px 15px;
+            border: none;
+            border-radius: var(--radius);
+            background: var(--light-color);
+            color: var(--text-color);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-btn.active {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .nav-btn.admin {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        /* SECCIONES PRINCIPALES */
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+            padding: 30px 0;
+            min-height: calc(100vh - 160px);
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* HERO SECTION */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 40px 20px;
+            border-radius: var(--radius);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
             margin-bottom: 15px;
         }
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
+        .hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
         }
 
-        input, select, textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            background-color: var(--card-bg);
-            color: var(--text);
-        }
-
-        textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .chip {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-right: 5px;
-            margin-bottom: 5px;
-            color: white;
-        }
-
-        .status-prospecto { background-color: #3498db; }
-        .status-interesado { background-color: #2ecc71; }
-        .status-pendiente { background-color: #f39c12; }
-        .status-instalar { background-color: #9b59b6; }
-        .status-transito { background-color: #34495e; }
-        .status-trabajando { background-color: #8e44ad; }
-        .status-instalada { background-color: #27ae60; }
-        .status-perdida { background-color: #e74c3c; }
-        .status-cobertura { background-color: #7f8c8d; }
-        .status-factibilidad { background-color: #d35400; }
-        .status-planta { background-color: #16a085; }
-
-        .theme-toggle {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--text);
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-            border-top: 1px solid var(--border);
-            color: var(--text-secondary);
-        }
-
-        .client-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        .client-table th, .client-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .client-table th {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .client-table tr:hover {
-            background-color: rgba(0, 0, 0, 0.03);
-        }
-
+        /* FILTROS */
         .filters {
-            display: flex;
+            background: white;
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .filter-group {
             display: flex;
             flex-direction: column;
+            gap: 8px;
         }
 
-        .summary-cards {
+        .filter-group label {
+            font-weight: 500;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        .filter-select,
+        .filter-input {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        /* BOTONES GENERALES */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-danger {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #219653;
+        }
+
+        /* GRID DE PROPIEDADES */
+        .properties-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        /* TARJETA DE PROPIEDAD */
+        .property-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .property-image {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .property-card:hover .property-image img {
+            transform: scale(1.05);
+        }
+
+        .property-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .badge-available {
+            background: var(--success-color);
+        }
+
+        .badge-sold {
+            background: var(--accent-color);
+        }
+
+        .property-info {
+            padding: 20px;
+        }
+
+        .property-title {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .property-detail {
+            margin: 8px 0;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .property-detail strong {
+            color: var(--primary-color);
+            margin-right: 5px;
+        }
+
+        .property-prices {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .price-item:last-child {
+            border-bottom: none;
+        }
+
+        .price-value {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .property-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .action-btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-map {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-download {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-copy {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+        }
+
+        .action-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* SIN RESULTADOS */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            grid-column: 1 / -1;
+        }
+
+        .no-results i {
+            font-size: 3rem;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .no-results h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .no-results p {
+            color: #666;
+        }
+
+        /* PANEL DE ADMINISTRACIÓN */
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
 
-        .summary-card {
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 20px;
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
             text-align: center;
-            box-shadow: 0 2px 4px var(--shadow);
+            border-top: 4px solid var(--secondary-color);
         }
 
-        .summary-card h3 {
-            margin-bottom: 10px;
-            font-size: 16px;
+        .stat-card.available {
+            border-top-color: var(--success-color);
         }
 
-        .summary-card .number {
-            font-size: 28px;
-            font-weight: bold;
-            color: var(--primary);
+        .stat-card.sold {
+            border-top-color: var(--accent-color);
         }
 
+        .stat-card.users {
+            border-top-color: #9b59b6;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* TABLA DE ADMIN */
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-top: 20px;
+        }
+
+        .admin-table th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--primary-color);
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .admin-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .admin-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .table-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .table-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit {
+            background: #e8f4fc;
+            color: var(--secondary-color);
+        }
+
+        .btn-delete {
+            background: #fdeaea;
+            color: var(--accent-color);
+        }
+
+        .btn-toggle {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        .table-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* FORMULARIOS MODALES */
         .modal {
             display: none;
             position: fixed;
@@ -254,2534 +588,1614 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            justify-content: center;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
             align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
         }
 
         .modal-content {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .close-modal {
-            float: right;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-        .tabs {
-            display: flex;
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .tab {
-            padding: 10px 20px;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-        }
-
-        .tab.active {
-            border-bottom: 3px solid var(--primary);
-            font-weight: bold;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .whatsapp-btn {
-            background-color: #25D366;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 20px;
-        }
-
-        .whatsapp-message-preview {
-            background-color: #dcf8c6;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 15px;
-            white-space: pre-line;
-            line-height: 1.5;
-        }
-
-        .price-info {
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 10px;
-            border-left: 4px solid var(--primary);
-        }
-
-        .price-info h4 {
-            margin-bottom: 10px;
-            color: var(--primary);
-        }
-
-        .price-info table {
+            background: white;
+            border-radius: var(--radius);
             width: 100%;
-            border-collapse: collapse;
-        }
-
-        .price-info th, .price-info td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .price-info th {
-            background-color: #e9ecef;
-        }
-
-        .commission-paid {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .paste-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1001;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .paste-modal-content {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 10px;
-            width: 90%;
             max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlide 0.3s ease;
         }
 
-        .paste-help {
-            margin-top: 15px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            font-size: 14px;
+        @keyframes modalSlide {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
-        .management-section {
-            margin-bottom: 30px;
-        }
-
-        .management-list {
-            list-style: none;
-            margin-top: 15px;
-        }
-
-        .management-list li {
-            padding: 10px;
-            border-bottom: 1px solid var(--border);
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .management-list li:last-child {
-            border-bottom: none;
-        }
-
-        .management-actions {
+        .modal-header h3 {
+            color: var(--primary-color);
             display: flex;
-            gap: 5px;
-        }
-
-        .management-actions button {
-            padding: 5px 10px;
-            font-size: 12px;
-        }
-
-        .gsheets-section {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-        }
-
-        .gsheets-form {
-            display: flex;
-            flex-direction: column;
+            align-items: center;
             gap: 10px;
         }
 
-        .gsheets-status {
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #e9ecef;
-        }
-
-        .mobile-menu-btn {
-            display: none;
+        .close-btn {
             background: none;
             border: none;
-            font-size: 24px;
-            color: var(--text);
+            font-size: 1.5rem;
+            color: #666;
             cursor: pointer;
+            padding: 5px;
+            line-height: 1;
         }
 
-        .make-section {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #e8f5e9;
-            border-radius: 8px;
-            border-left: 4px solid #4caf50;
+        .modal-body {
+            padding: 20px;
         }
 
-        .make-steps {
-            margin-top: 15px;
-            padding-left: 20px;
+        .form-group {
+            margin-bottom: 20px;
         }
 
-        .make-steps li {
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .file-upload {
+            border: 2px dashed #ddd;
+            border-radius: 6px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload:hover {
+            border-color: var(--secondary-color);
+            background: #f8f9fa;
+        }
+
+        .file-upload i {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        #image-preview {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 6px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        /* LOGIN */
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 40px;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h2 {
+            color: var(--primary-color);
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
+        .input-with-icon {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+
+        .input-with-icon input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .demo-creds {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        /* GESTIÓN DE USUARIOS */
+        .user-card {
+            background: white;
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 15px;
+        }
+
+        .user-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .user-details h4 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .user-details p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .user-role {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .role-admin {
+            background: #e8f4fc;
+            color: var(--secondary-color);
+        }
+
+        .role-user {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        /* NOTIFICACIONES */
         .notification {
             position: fixed;
             top: 20px;
             right: 20px;
-            padding: 15px;
-            border-radius: 5px;
+            padding: 15px 20px;
+            background: var(--success-color);
             color: white;
-            z-index: 10000;
-            display: none;
-        }
-
-        .notification.success {
-            background-color: #4caf50;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s ease;
         }
 
         .notification.error {
-            background-color: #f44336;
+            background: var(--accent-color);
         }
 
+        .notification.info {
+            background: var(--secondary-color);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* RESPONSIVE - MÓVIL */
         @media (max-width: 768px) {
-            .grid {
+            body {
+                padding-top: 120px; /* Más espacio para header más grande en móvil */
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-section {
+                display: none;
+                padding-top: 15px;
+            }
+
+            .nav-section.active {
+                display: block;
+            }
+
+            .nav-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .nav-btn {
+                padding: 15px;
+                font-size: 1rem;
+            }
+
+            .properties-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .controls, .filters {
-                flex-direction: column;
-            }
-            
-            .client-table {
+
+            .admin-table {
                 display: block;
                 overflow-x: auto;
             }
 
-            .mobile-menu-btn {
-                display: block;
+            .table-actions {
+                flex-direction: column;
             }
 
-            .controls {
+            .admin-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .filter-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 10px;
+            }
+        }
+
+        /* TABLET */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .properties-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .admin-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* PC/LAPTOP */
+        @media (min-width: 1025px) {
+            .header-content {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px 0;
+            }
+
+            .logo-section {
+                padding-bottom: 0;
+                border-bottom: none;
+            }
+
+            .nav-section {
+                padding-top: 0;
+                flex: 1;
+                max-width: 500px;
+            }
+
+            .hamburger {
                 display: none;
-                flex-direction: column;
             }
 
-            .controls.active {
-                display: flex;
+            .nav-section {
+                display: block !important;
             }
+        }
 
-            .filters {
-                flex-direction: column;
-            }
+        /* ESTADÍSTICAS DE VENTAS */
+        .sales-stats {
+            background: white;
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-top: 30px;
+        }
 
-            .filter-group {
-                width: 100%;
-            }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
 
-            .tab {
-                padding: 8px 12px;
-                font-size: 14px;
-            }
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
 
-            button {
-                width: 100%;
-                justify-content: center;
-            }
+        .stat-num {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
 
-            .management-actions {
-                flex-direction: column;
-            }
-
-            .whatsapp-btn {
-                width: 35px;
-                height: 35px;
-                font-size: 16px;
-            }
+        .stat-text {
+            color: #666;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
-    <div class="notification" id="notification"></div>
-    
-    <div class="container">
-        <header>
-            <div class="logo">
-                <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
-                <span class="logo-icon"><i class="fas fa-users"></i></span>
-                <h1>CRM - Gestión de Clientes</h1>
-            </div>
-            <div>
-                <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
-            </div>
-        </header>
-
-        <div class="controls" id="mainControls">
-            <button id="newClientBtn"><i class="fas fa-plus"></i> Nuevo Cliente</button>
-            <button id="syncBtn" class="secondary"><i class="fas fa-sync"></i> Sincronizar con Google Sheets</button>
-            <button id="exportBtn" class="warning"><i class="fas fa-download"></i> Exportar Datos</button>
-            <button id="summaryBtn"><i class="fas fa-chart-bar"></i> Resumen Mensual</button>
-            <button id="manageSellersBtn"><i class="fas fa-user-tie"></i> Gestionar Vendedores</button>
-            <button id="manageServicesBtn"><i class="fas fa-concierge-bell"></i> Gestionar Servicios</button>
-            <button id="managePlansBtn"><i class="fas fa-list-alt"></i> Gestionar Planes</button>
-            <button id="makeConfigBtn"><i class="fas fa-cloud"></i> Configurar Make.com</button>
-        </div>
-
-        <div class="summary-cards">
-            <div class="summary-card">
-                <h3>Clientes Totales</h3>
-                <div class="number" id="totalClients">0</div>
-            </div>
-            <div class="summary-card">
-                <h3>Por Instalar</h3>
-                <div class="number" id="pendingInstall">0</div>
-            </div>
-            <div class="summary-card">
-                <h3>Instalaciones Este Mes</h3>
-                <div class="number" id="monthlyInstall">0</div>
-            </div>
-            <div class="summary-card">
-                <h3>Comisiones Pendientes</h3>
-                <div class="number" id="pendingCommissions">$0</div>
-            </div>
-            <div class="summary-card">
-                <h3>Comisiones Pagadas</h3>
-                <div class="number" id="paidCommissions">$0</div>
+    <!-- HEADER RESPONSIVO -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <a href="#" class="logo" onclick="showSection('home')">
+                        <div class="logo-icon">J</div>
+                        <div class="logo-text">JKEA <span>INMOBILIARIA</span></div>
+                    </a>
+                    <button class="hamburger" onclick="toggleMenu()">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+                
+                <div class="nav-section" id="navMenu">
+                    <div class="nav-grid">
+                        <button class="nav-btn active" onclick="showSection('home')">
+                            <i class="fas fa-home"></i> Casas en Venta
+                        </button>
+                        <button class="nav-btn" onclick="showSection('sold')">
+                            <i class="fas fa-check-circle"></i> Casas Vendidas
+                        </button>
+                        <button class="nav-btn admin" onclick="showSection('login')">
+                            <i class="fas fa-user-shield"></i> Área Admin
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
+    </header>
 
-        <div class="filters">
-            <div class="filter-group">
-                <label for="statusFilter">Filtrar por Estado</label>
-                <select id="statusFilter">
-                    <option value="">Todos los estados</option>
-                    <option value="prospecto">Prospecto</option>
-                    <option value="interesado">Interesado</option>
-                    <option value="pendiente">Pendiente de enviar documentos</option>
-                    <option value="instalar">Pendiente de instalar</option>
-                    <option value="transito">Técnico en tránsito</option>
-                    <option value="trabajando">Técnico trabajando</option>
-                    <option value="instalada">Instalada</option>
-                    <option value="perdida">Perdida/Cancelada</option>
-                    <option value="cobertura">Fuera de cobertura</option>
-                    <option value="factibilidad">Factibilidad</option>
-                    <option value="planta">Planta Externa</option>
-                </select>
+    <!-- SECCIÓN PRINCIPAL - CASAS EN VENTA -->
+    <section id="home-section" class="section active">
+        <div class="container">
+            <div class="hero">
+                <h1><i class="fas fa-search-home"></i> Encuentra tu hogar ideal</h1>
+                <p>Las mejores propiedades en venta al mejor precio</p>
             </div>
-            <div class="filter-group">
-                <label for="sellerFilter">Filtrar por Vendedor</label>
-                <select id="sellerFilter">
-                    <option value="">Todos los vendedores</option>
-                    <!-- Los vendedores se cargarán dinámicamente -->
-                </select>
+
+            <!-- Filtros -->
+            <div class="filters">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label><i class="fas fa-city"></i> Municipio</label>
+                        <select class="filter-select" id="filter-municipio" onchange="filterProperties()">
+                            <option value="">Todos los municipios</option>
+                            <option value="ZUAZUA">ZUAZUA</option>
+                            <option value="APODACA">APODACA</option>
+                            <option value="GUADALUPE">GUADALUPE</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label><i class="fas fa-dollar-sign"></i> Precio máximo</label>
+                        <input type="number" class="filter-input" id="filter-price" placeholder="Ej: 1000000" oninput="filterProperties()">
+                    </div>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-secondary" onclick="clearFilters()">
+                        <i class="fas fa-times"></i> Limpiar filtros
+                    </button>
+                </div>
             </div>
-            <div class="filter-group">
-                <label for="dateFilter">Filtrar por Mes</label>
-                <select id="dateFilter">
-                    <option value="">Todos los meses</option>
-                    <option value="2025-06">Junio 2025</option>
-                    <option value="2025-07">Julio 2025</option>
-                    <option value="2025-08">Agosto 2025</option>
-                </select>
+
+            <!-- Contador -->
+            <div style="background: white; padding: 15px 20px; border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 20px;">
+                <h3 id="property-counter" style="color: var(--primary-color); margin: 0; font-size: 1.1rem;">
+                    <i class="fas fa-home"></i> Mostrando <span id="count">3</span> propiedades disponibles
+                </h3>
             </div>
-            <div class="filter-group">
-                <label for="commissionFilter">Filtrar por Comisión</label>
-                <select id="commissionFilter">
-                    <option value="">Todas</option>
-                    <option value="pendiente">Pendientes de pago</option>
-                    <option value="pagada">Pagadas</option>
-                </select>
+
+            <!-- Grid de Propiedades -->
+            <div class="properties-grid" id="properties-container">
+                <!-- Cargado con JavaScript -->
             </div>
-            <div class="filter-group">
-                <label for="searchFilter">Buscar</label>
-                <input type="text" id="searchFilter" placeholder="Nombre, teléfono, cuenta...">
+
+            <!-- Sin resultados -->
+            <div class="no-results" id="no-results" style="display: none;">
+                <i class="fas fa-search fa-3x"></i>
+                <h3>No se encontraron propiedades</h3>
+                <p>Intenta con otros filtros de búsqueda</p>
             </div>
         </div>
+    </section>
 
-        <div class="card">
-            <h2>Lista de Clientes</h2>
-            <div class="table-responsive">
-                <table class="client-table">
+    <!-- SECCIÓN CASAS VENDIDAS -->
+    <section id="sold-section" class="section">
+        <div class="container">
+            <div class="hero" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                <h1><i class="fas fa-trophy"></i> Propiedades Vendidas</h1>
+                <p>Historial de propiedades exitosamente comercializadas</p>
+            </div>
+
+            <!-- Grid de Propiedades Vendidas -->
+            <div class="properties-grid" id="sold-properties-container">
+                <!-- Cargado con JavaScript -->
+            </div>
+
+            <!-- Estadísticas de Ventas -->
+            <div class="sales-stats">
+                <h3><i class="fas fa-chart-line"></i> Estadísticas de Ventas</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-num" id="total-sold">0</div>
+                        <div class="stat-text">Propiedades Vendidas</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num" id="total-sales">$0</div>
+                        <div class="stat-text">Total en Ventas</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num" id="avg-price">$0</div>
+                        <div class="stat-text">Precio Promedio</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num" id="success-rate">0%</div>
+                        <div class="stat-text">Tasa de Éxito</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN LOGIN -->
+    <section id="login-section" class="section">
+        <div class="container">
+            <div class="login-container">
+                <div class="login-header">
+                    <h2><i class="fas fa-user-shield"></i> Área Administrativa</h2>
+                    <p>Acceso exclusivo para personal autorizado</p>
+                </div>
+
+                <form id="loginForm">
+                    <div class="input-with-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="login-email" placeholder="Correo electrónico" required>
+                    </div>
+
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="login-password" placeholder="Contraseña" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                    </button>
+                </form>
+
+                <div class="demo-creds">
+                    <p><strong>Administrador Principal:</strong></p>
+                    <p>Email: <strong>admin@jkea.com</strong></p>
+                    <p>Contraseña: <strong>Admin123</strong></p>
+                </div>
+
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn btn-secondary" onclick="showSection('home')">
+                        <i class="fas fa-arrow-left"></i> Volver al inicio
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN PANEL ADMIN -->
+    <section id="admin-section" class="section">
+        <div class="container">
+            <div class="admin-header">
+                <h1><i class="fas fa-tachometer-alt"></i> Panel de Administración</h1>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-success" onclick="showAddPropertyModal()">
+                        <i class="fas fa-plus"></i> Nueva Propiedad
+                    </button>
+                    <button class="btn btn-primary" onclick="showAddUserModal()">
+                        <i class="fas fa-user-plus"></i> Nuevo Usuario
+                    </button>
+                    <button class="btn btn-danger" onclick="logoutAdmin()">
+                        <i class="fas fa-sign-out-alt"></i> Salir
+                    </button>
+                </div>
+            </div>
+
+            <!-- Estadísticas -->
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="admin-total">0</div>
+                    <div class="stat-label">Total Propiedades</div>
+                </div>
+                <div class="stat-card available">
+                    <div class="stat-value" id="admin-available">0</div>
+                    <div class="stat-label">Disponibles</div>
+                </div>
+                <div class="stat-card sold">
+                    <div class="stat-value" id="admin-sold">0</div>
+                    <div class="stat-label">Vendidas</div>
+                </div>
+                <div class="stat-card users">
+                    <div class="stat-value" id="admin-users">0</div>
+                    <div class="stat-label">Usuarios</div>
+                </div>
+            </div>
+
+            <!-- Gestión de Usuarios -->
+            <div style="background: white; padding: 25px; border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 30px;">
+                <h3 style="margin-bottom: 20px; color: var(--primary-color);">
+                    <i class="fas fa-users"></i> Usuarios del Sistema
+                </h3>
+                <div id="users-list">
+                    <!-- Cargado con JavaScript -->
+                </div>
+            </div>
+
+            <!-- Tabla de Propiedades -->
+            <h3 style="margin: 0 0 20px; color: var(--primary-color);">
+                <i class="fas fa-home"></i> Gestión de Propiedades
+            </h3>
+            <div style="overflow-x: auto;">
+                <table class="admin-table">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Teléfono</th>
+                            <th>ID</th>
+                            <th>Imagen</th>
+                            <th>Municipio</th>
+                            <th>Colonia</th>
+                            <th>Precio</th>
                             <th>Estado</th>
-                            <th>Vendedor</th>
-                            <th>Fecha Captura</th>
-                            <th>Plan</th>
-                            <th>Comisión</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="clientsTableBody">
-                        <tr>
-                            <td colspan="8" style="text-align: center;">Cargando clientes...</td>
-                        </tr>
+                    <tbody id="admin-properties-table">
+                        <!-- Cargado con JavaScript -->
                     </tbody>
                 </table>
             </div>
         </div>
+    </section>
 
-        <!-- Sección de Make.com -->
-        <div class="management-section" id="makeSection" style="display: none;">
-            <div class="card">
-                <h2>Integración con Make.com</h2>
-                <div class="make-section">
-                    <p>Con Make.com (antes Integromat) puedes sincronizar automáticamente tus datos con Google Sheets sin necesidad de programación compleja.</p>
-                    
-                    <h3>Configuración Actual</h3>
-                    <p>Webhook URL: <strong id="currentWebhookUrl">https://hook.eu2.make.com/bnhk5ny1viui7oltga2wghg9of1vrmj</strong></p>
-                    <p>Estado: <strong id="makeStatusText">Conectado</strong></p>
-                    
-                    <div class="form-group">
-                        <label for="makeWebhookUrl">URL del Webhook de Make.com (si necesitas cambiarlo)</label>
-                        <input type="url" id="makeWebhookUrl" placeholder="https://hook.make.com/..." value="https://hook.eu2.make.com/bnhk5ny1viui7oltga2wghg9of1vrmj">
-                    </div>
-                    
-                    <button id="saveMakeConfigBtn" class="secondary"><i class="fas fa-save"></i> Actualizar Configuración</button>
-                </div>
-                
-                <h3 style="margin-top: 20px;">Sincronización</h3>
-                <div class="gsheets-form">
-                    <button id="testMakeBtn"><i class="fas fa-bolt"></i> Probar Conexión</button>
-                    <button id="syncMakeBtn" class="secondary"><i class="fas fa-sync-alt"></i> Sincronizar Ahora</button>
-                    <button id="importFromSheetsBtn" class="warning"><i class="fas fa-file-import"></i> Importar desde Sheets</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Secciones de gestión -->
-        <div class="management-section" id="sellersSection" style="display: none;">
-            <div class="card">
-                <h2>Gestión de Vendedores</h2>
-                <div class="form-group">
-                    <label for="sellerName">Nombre del Vendedor</label>
-                    <input type="text" id="sellerName" placeholder="Nombre completo">
-                </div>
-                <div class="form-group">
-                    <label for="sellerPhone">Teléfono</label>
-                    <input type="tel" id="sellerPhone" placeholder="Teléfono de contacto">
-                </div>
-                <button id="addSellerBtn" class="secondary"><i class="fas fa-plus"></i> Agregar Vendedor</button>
-                
-                <h3 style="margin-top: 20px;">Lista de Vendedores</h3>
-                <ul class="management-list" id="sellersList">
-                    <!-- Los vendedores se cargarán dinámicamente -->
-                </ul>
-            </div>
-        </div>
-
-        <div class="management-section" id="servicesSection" style="display: none;">
-            <div class="card">
-                <h2>Gestión de Servicios</h2>
-                <div class="form-group">
-                    <label for="serviceName">Nombre del Servicio</label>
-                    <input type="text" id="serviceName" placeholder="Nombre del servicio">
-                </div>
-                <button id="addServiceBtn" class="secondary"><i class="fas fa-plus"></i> Agregar Servicio</button>
-                
-                <h3 style="margin-top: 20px;">Lista de Servicios</h3>
-                <ul class="management-list" id="servicesList">
-                    <!-- Los servicios se cargarán dinámicamente -->
-                </ul>
-            </div>
-        </div>
-
-        <div class="management-section" id="plansSection" style="display: none;">
-            <div class="card">
-                <h2>Gestión de Planes</h2>
-                <div class="form-group">
-                    <label for="planName">Nombre del Plan</label>
-                    <input type="text" id="planName" placeholder="Ej: 100 Mbps">
-                </div>
-                <div class="form-group">
-                    <label for="planSpeed">Velocidad (Mbps)</label>
-                    <input type="number" id="planSpeed" placeholder="100">
-                </div>
-                <div class="form-group">
-                    <label for="planServiceType">Tipo de Servicio</label>
-                    <select id="planServiceType">
-                        <!-- Se cargará dinámicamente -->
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="planFastPrice">Precio Pronto Pago</label>
-                    <input type="number" id="planFastPrice" placeholder="460">
-                </div>
-                <div class="form-group">
-                    <label for="planListPrice">Precio de Lista</label>
-                    <input type="number" id="planListPrice" placeholder="510">
-                </div>
-                <div class="form-group">
-                    <label for="planCommission">Comisión</label>
-                    <input type="number" id="planCommission" placeholder="60">
-                </div>
-                <button id="addPlanBtn" class="secondary"><i class="fas fa-plus"></i> Agregar Plan</button>
-                
-                <h3 style="margin-top: 20px;">Lista de Planes</h3>
-                <ul class="management-list" id="plansList">
-                    <!-- Los planes se cargarán dinámicamente -->
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal para pegar información -->
-    <div class="paste-modal" id="pasteModal">
-        <div class="paste-modal-content">
-            <span class="close-modal" id="closePasteModal">&times;</span>
-            <h2>Pegar Información del Cliente</h2>
-            
-            <div class="form-group">
-                <label for="pasteText">Pega aquí la información del cliente:</label>
-                <textarea id="pasteText" placeholder="Ejemplo:
-Aurora Guerrero Zapata
-
-13/Agosto/1978
-
-auroraguerrero046@gmail.com
-
-8136274272
-
-Tenerife 415
-Entre León de Francia y florencia 
-Paseo de las flores
-Apodaca
-
-Plan contratado
-100 MEGAS + Canales $600 mensual" rows="10"></textarea>
-            </div>
-            
-            <div class="paste-help">
-                <p><strong>Formato esperado:</strong></p>
-                <p>Nombre completo</p>
-                <p>Fecha de nacimiento (opcional)</p>
-                <p>Correo electrónico</p>
-                <p>Teléfono</p>
-                <p>Dirección (varias líneas)</p>
-                <p>Plan contratado</p>
-            </div>
-            
-            <div style="margin-top: 20px; text-align: right;">
-                <button id="processPasteBtn" class="secondary">Procesar Información</button>
-                <button id="cancelPasteBtn">Cancelar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal para nuevo cliente -->
-    <div class="modal" id="clientModal">
+    <!-- MODAL PARA AGREGAR/EDITAR PROPIEDAD -->
+    <div id="propertyModal" class="modal">
         <div class="modal-content">
-            <span class="close-modal" id="closeModal">&times;</span>
-            <h2 id="modalTitle">Nuevo Cliente</h2>
-            
-            <div class="tabs">
-                <div class="tab active" data-tab="info">Información Básica</div>
-                <div class="tab" data-tab="sale">Datos de Venta</div>
-                <div class="tab" data-tab="additional">Información Adicional</div>
+            <div class="modal-header">
+                <h3 id="modal-title"><i class="fas fa-plus-circle"></i> Nueva Propiedad</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
             </div>
-            
-            <form id="clientForm">
-                <div class="tab-content active" id="info-tab">
-                    <div class="form-group">
-                        <label for="clientName">Nombre del Cliente *</label>
-                        <input type="text" id="clientName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="clientPhone">Teléfono/WhatsApp *</label>
-                        <input type="tel" id="clientPhone" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="clientAdditionalPhone">Teléfono Adicional</label>
-                        <input type="tel" id="clientAdditionalPhone">
-                    </div>
-                    <div class="form-group">
-                        <label for="clientEmail">Correo Electrónico</label>
-                        <input type="email" id="clientEmail">
-                    </div>
-                    <div class="form-group">
-                        <label for="clientAddress">Dirección</label>
-                        <textarea id="clientAddress"></textarea>
-                    </div>
-                </div>
-                
-                <div class="tab-content" id="sale-tab">
-                    <div class="form-group">
-                        <label for="clientStatus">Estado *</label>
-                        <select id="clientStatus" required>
-                            <option value="prospecto">Prospecto</option>
-                            <option value="interesado">Interesado</option>
-                            <option value="pendiente">Pendiente de enviar documentos</option>
-                            <option value="instalar">Pendiente de instalar</option>
-                            <option value="transito">Técnico en tránsito</option>
-                            <option value="trabajando">Técnico trabajando</option>
-                            <option value="instalada">Instalada</option>
-                            <option value="perdida">Perdida/Cancelada</option>
-                            <option value="cobertura">Fuera de cobertura</option>
-                            <option value="factibilidad">Factibilidad</option>
-                            <option value="planta">Planta Externa</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="serviceType">Tipo de Servicio *</label>
-                        <select id="serviceType" required>
-                            <option value="">Seleccionar tipo de servicio</option>
-                            <!-- Los servicios se cargarán dinámicamente -->
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="clientPlan">Plan Vendido *</label>
-                        <select id="clientPlan" required>
-                            <option value="">Seleccionar plan</option>
-                            <!-- Los planes se cargarán dinámicamente -->
-                        </select>
-                    </div>
-                    
-                    <div class="price-info" id="priceInfo" style="display: none;">
-                        <h4>Información de Precios</h4>
-                        <table>
-                            <tr>
-                                <th>Plan</th>
-                                <th>Pago Puntual</th>
-                                <th>Precio de Lista</th>
-                                <th>Comisión</th>
-                            </tr>
-                            <tbody id="priceInfoBody">
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <div id="priceFields" style="display: none;">
+            <div class="modal-body">
+                <form id="propertyForm">
+                    <div class="form-row">
                         <div class="form-group">
-                            <label for="clientListPrice">Precio de Lista</label>
-                            <input type="number" id="clientListPrice" readonly>
+                            <label><i class="fas fa-city"></i> Municipio *</label>
+                            <input type="text" class="form-control" id="modal-municipio" required>
                         </div>
                         <div class="form-group">
-                            <label for="clientFastPrice">Precio Pronto Pago</label>
-                            <input type="number" id="clientFastPrice" readonly>
+                            <label><i class="fas fa-map-marker-alt"></i> Colonia *</label>
+                            <input type="text" class="form-control" id="modal-colonia" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-file-alt"></i> Descripción *</label>
+                        <textarea class="form-control" id="modal-descripcion" rows="4" required></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-dollar-sign"></i> Precio Propiedad *</label>
+                            <input type="number" class="form-control" id="modal-precio" required>
                         </div>
                         <div class="form-group">
-                            <label for="clientCommission">Comisión Ganada</label>
-                            <input type="number" id="clientCommission" readonly>
+                            <label><i class="fas fa-file-invoice-dollar"></i> Costo Avalúo *</label>
+                            <input type="number" class="form-control" id="modal-avaluo" required>
                         </div>
-                        
-                        <div class="commission-paid" id="commissionPaidSection" style="display: none;">
-                            <input type="checkbox" id="commissionPaid">
-                            <label for="commissionPaid">¿Comisión ya pagada?</label>
+                        <div class="form-group">
+                            <label><i class="fas fa-file-contract"></i> Carta No Propiedad *</label>
+                            <input type="number" class="form-control" id="modal-carta" required>
                         </div>
                     </div>
-                </div>
-                
-                <div class="tab-content" id="additional-tab">
+
                     <div class="form-group">
-                        <label for="clientAccount">Número de Cuenta</label>
-                        <input type="text" id="clientAccount">
+                        <label><i class="fas fa-map-marked-alt"></i> Enlace Google Maps *</label>
+                        <input type="url" class="form-control" id="modal-maps" required>
                     </div>
+
                     <div class="form-group">
-                        <label for="clientReference">Número de Referencia de Pago</label>
-                        <input type="text" id="clientReference">
+                        <label><i class="fas fa-image"></i> Imagen de la Propiedad *</label>
+                        <div class="file-upload" onclick="document.getElementById('property-image-input').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Haz clic para subir una imagen</p>
+                            <p style="font-size: 0.9rem; color: #666;">Formatos: JPG, PNG, WEBP</p>
+                            <input type="file" id="property-image-input" accept="image/*" onchange="previewImage(event)" style="display: none;" required>
+                        </div>
+                        <img id="image-preview" alt="Vista previa">
                     </div>
+
                     <div class="form-group">
-                        <label for="clientCaptureDate">Fecha de Captura</label>
-                        <input type="date" id="clientCaptureDate">
+                        <label><i class="fas fa-tag"></i> Estado</label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="modal-vendida">
+                            <label for="modal-vendida">Marcar como vendida</label>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="clientInstallDate">Fecha de Instalado</label>
-                        <input type="date" id="clientInstallDate">
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal()">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            Guardar Propiedad
+                        </button>
                     </div>
-                    <div class="form-group">
-                        <label for="clientDistrict">¿Es Distrito?</label>
-                        <select id="clientDistrict">
-                            <option value="no">No</option>
-                            <option value="si">Sí</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="clientSeller">Vendedor</label>
-                        <select id="clientSeller">
-                            <!-- Se cargará dinámicamente -->
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="clientComments">Comentarios</label>
-                        <textarea id="clientComments"></textarea>
-                    </div>
-                </div>
-                
-                <div style="margin-top: 20px; display: flex; justify-content: space-between;">
-                    <button type="button" id="prevTab" class="secondary"><i class="fas fa-arrow-left"></i> Anterior</button>
-                    <button type="button" id="nextTab" class="secondary">Siguiente <i class="fas fa-arrow-right"></i></button>
-                </div>
-                
-                <div style="margin-top: 20px; text-align: right;">
-                    <button type="submit" id="saveClientBtn">Guardar Cliente</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 
-    <!-- Modal para recordatorio de WhatsApp -->
-    <div class="modal" id="whatsappModal">
+    <!-- MODAL PARA AGREGAR USUARIO -->
+    <div id="userModal" class="modal">
         <div class="modal-content">
-            <span class="close-modal" id="closeWhatsappModal">&times;</span>
-            <h2>Enviar Recordatorio por WhatsApp</h2>
-            
-            <div class="form-group">
-                <label for="whatsappTemplate">Plantilla de Mensaje</label>
-                <select id="whatsappTemplate">
-                    <option value="pago">Recordatorio de Pago</option>
-                    <option value="instalacion">Recordatorio de Instalación</option>
-                    <option value="seguimiento">Seguimiento Post-Venta</option>
-                </select>
+            <div class="modal-header">
+                <h3><i class="fas fa-user-plus"></i> Nuevo Usuario</h3>
+                <button class="close-btn" onclick="closeUserModal()">&times;</button>
             </div>
-            
-            <div class="whatsapp-message-preview" id="whatsappPreview">
-                👋 Hola [Nombre], buen día.
+            <div class="modal-body">
+                <form id="userForm">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Nombre Completo *</label>
+                        <input type="text" class="form-control" id="user-name" required>
+                    </div>
 
-                📌 Te comparto tu referencia de pago en OXXO:
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Email *</label>
+                        <input type="email" class="form-control" id="user-email" required>
+                    </div>
 
-                💳 Referencia: [Referencia]
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-lock"></i> Contraseña *</label>
+                            <input type="password" class="form-control" id="user-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-lock"></i> Confirmar Contraseña *</label>
+                            <input type="password" class="form-control" id="user-confirm" required>
+                        </div>
+                    </div>
 
-                ⏳ Desde hoy cuentas con 25 a 28 días para tu siguiente pago dentro de tu precio de promoción.
+                    <div class="form-group">
+                        <label><i class="fas fa-user-tag"></i> Tipo de Usuario</label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="user-admin">
+                            <label for="user-admin">Es Administrador</label>
+                        </div>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">
+                            Máximo 3 administradores permitidos
+                        </p>
+                    </div>
 
-                ❓Cualquier duda, mándame mensaje y te ayudo al momento.
-
-                🙏 Gracias por tu preferencia.
-            </div>
-            
-            <div style="margin-top: 20px; text-align: right;">
-                <button id="sendWhatsappBtn" class="secondary"><i class="fab fa-whatsapp"></i> Abrir WhatsApp</button>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeUserModal()">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            Crear Usuario
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 
-    <footer>
-        <p>CRM - Gestión de Clientes &copy; 2023 | Conectado con Make.com y Google Sheets</p>
-    </footer>
+    <!-- MODAL DE CONFIRMACIÓN -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-exclamation-triangle"></i> Confirmar</h3>
+                <button class="close-btn" onclick="closeConfirmModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="confirm-message" style="text-align: center; margin-bottom: 30px; font-size: 1.1rem;"></p>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeConfirmModal()">
+                        Cancelar
+                    </button>
+                    <button type="button" class="btn btn-danger" id="confirm-action-btn">
+                        Confirmar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- SCRIPT PRINCIPAL -->
     <script>
-        // URL de Make.com Webhook
-        const MAKE_WEBHOOK_URL = 'https://hook.eu2.make.com/bnhk5ny1viui7oltga2wghg9of1vrmj';
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            // Elementos DOM
-            const themeToggle = document.getElementById('themeToggle');
-            const newClientBtn = document.getElementById('newClientBtn');
-            const syncBtn = document.getElementById('syncBtn');
-            const exportBtn = document.getElementById('exportBtn');
-            const summaryBtn = document.getElementById('summaryBtn');
-            const clientModal = document.getElementById('clientModal');
-            const closeModal = document.getElementById('closeModal');
-            const clientForm = document.getElementById('clientForm');
-            const saveClientBtn = document.getElementById('saveClientBtn');
-            const clientsTableBody = document.getElementById('clientsTableBody');
-            const statusFilter = document.getElementById('statusFilter');
-            const sellerFilter = document.getElementById('sellerFilter');
-            const dateFilter = document.getElementById('dateFilter');
-            const commissionFilter = document.getElementById('commissionFilter');
-            const searchFilter = document.getElementById('searchFilter');
-            const whatsappModal = document.getElementById('whatsappModal');
-            const closeWhatsappModal = document.getElementById('closeWhatsappModal');
-            const sendWhatsappBtn = document.getElementById('sendWhatsappBtn');
-            const prevTabBtn = document.getElementById('prevTab');
-            const nextTabBtn = document.getElementById('nextTab');
-            const whatsappTemplate = document.getElementById('whatsappTemplate');
-            const whatsappPreview = document.getElementById('whatsappPreview');
-            const serviceType = document.getElementById('serviceType');
-            const clientPlan = document.getElementById('clientPlan');
-            const clientStatus = document.getElementById('clientStatus');
-            const priceInfo = document.getElementById('priceInfo');
-            const priceInfoBody = document.getElementById('priceInfoBody');
-            const priceFields = document.getElementById('priceFields');
-            const clientListPrice = document.getElementById('clientListPrice');
-            const clientFastPrice = document.getElementById('clientFastPrice');
-            const clientCommission = document.getElementById('clientCommission');
-            const commissionPaid = document.getElementById('commissionPaid');
-            const commissionPaidSection = document.getElementById('commissionPaidSection');
-            const pasteModal = document.getElementById('pasteModal');
-            const closePasteModal = document.getElementById('closePasteModal');
-            const pasteText = document.getElementById('pasteText');
-            const processPasteBtn = document.getElementById('processPasteBtn');
-            const cancelPasteBtn = document.getElementById('cancelPasteBtn');
-            const clientAddress = document.getElementById('clientAddress');
-            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-            const mainControls = document.getElementById('mainControls');
-            const manageSellersBtn = document.getElementById('manageSellersBtn');
-            const manageServicesBtn = document.getElementById('manageServicesBtn');
-            const managePlansBtn = document.getElementById('managePlansBtn');
-            const makeConfigBtn = document.getElementById('makeConfigBtn');
-            const sellersSection = document.getElementById('sellersSection');
-            const servicesSection = document.getElementById('servicesSection');
-            const plansSection = document.getElementById('plansSection');
-            const makeSection = document.getElementById('makeSection');
-            const sellerName = document.getElementById('sellerName');
-            const sellerPhone = document.getElementById('sellerPhone');
-            const addSellerBtn = document.getElementById('addSellerBtn');
-            const sellersList = document.getElementById('sellersList');
-            const serviceName = document.getElementById('serviceName');
-            const addServiceBtn = document.getElementById('addServiceBtn');
-            const servicesList = document.getElementById('servicesList');
-            const planName = document.getElementById('planName');
-            const planSpeed = document.getElementById('planSpeed');
-            const planServiceType = document.getElementById('planServiceType');
-            const planFastPrice = document.getElementById('planFastPrice');
-            const planListPrice = document.getElementById('planListPrice');
-            const planCommission = document.getElementById('planCommission');
-            const addPlanBtn = document.getElementById('addPlanBtn');
-            const plansList = document.getElementById('plansList');
-            const makeWebhookUrl = document.getElementById('makeWebhookUrl');
-            const saveMakeConfigBtn = document.getElementById('saveMakeConfigBtn');
-            const testMakeBtn = document.getElementById('testMakeBtn');
-            const syncMakeBtn = document.getElementById('syncMakeBtn');
-            const importFromSheetsBtn = document.getElementById('importFromSheetsBtn');
-            const currentWebhookUrl = document.getElementById('currentWebhookUrl');
-            const makeStatusText = document.getElementById('makeStatusText');
-            const notification = document.getElementById('notification');
+        // =============================================
+        // DATOS INICIALES
+        // =============================================
+        let propiedades = JSON.parse(localStorage.getItem('jkea_propiedades')) || [
+            {
+                id: 1,
+                municipio: "ZUAZUA",
+                colonia: "VALLE DE SANTA ELENA<br>SECTOR SAN JUAN",
+                descripcion: "2 PLANTAS\n2 RECAMARAS\nSALA\nCOMEDOR\nCOCINA\n1 BAÑO\nPATIO TRASERO",
+                costo_propiedad: 880000,
+                costo_avaluo: 8500,
+                costo_carta_no_propiedad: 800,
+                google_maps_link: "https://maps.app.goo.gl/zuazua-ejemplo1",
+                imagen_url: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                vendida: false,
+                fecha_creacion: "2024-01-15"
+            },
+            {
+                id: 2,
+                municipio: "APODACA",
+                colonia: "MISION DE SAN FRANCISCO",
+                descripcion: "CASA NUEVA\n3 RECAMARAS\n2 BAÑOS COMPLETOS\nCOCINA CON ISLA\nSALA/COMEDOR\nCOCHERA 2 AUTOS\nJARDÍN FRONTAL",
+                costo_propiedad: 1250000,
+                costo_avaluo: 9500,
+                costo_carta_no_propiedad: 900,
+                google_maps_link: "https://maps.app.goo.gl/apodaca-ejemplo2",
+                imagen_url: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                vendida: false,
+                fecha_creacion: "2024-01-10"
+            },
+            {
+                id: 3,
+                municipio: "GUADALUPE",
+                colonia: "COLONIA DEL VALLE",
+                descripcion: "EXCELENTE UBICACIÓN\n2 PLANTAS\n3 RECAMARAS (PRINCIPAL CON BAÑO)\n2.5 BAÑOS\nCOCINA INTEGRAL\nTERRAZA\nÁREA DE LAVADO",
+                costo_propiedad: 1950000,
+                costo_avaluo: 12000,
+                costo_carta_no_propiedad: 1100,
+                google_maps_link: "https://maps.app.goo.gl/guadalupe-ejemplo3",
+                imagen_url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                vendida: false,
+                fecha_creacion: "2024-01-05"
+            }
+        ];
+
+        let usuarios = JSON.parse(localStorage.getItem('jkea_usuarios')) || [
+            {
+                id: 1,
+                nombre: "Administrador Principal",
+                email: "admin@jkea.com",
+                password: "Admin123",
+                es_admin: true,
+                activo: true
+            }
+        ];
+
+        // Variables globales
+        let currentPropertyId = null;
+        let deletePropertyId = null;
+        let deleteUserId = null;
+
+        // =============================================
+        // FUNCIONES DE NAVEGACIÓN
+        // =============================================
+        function showSection(sectionId) {
+            // Ocultar menú en móviles
+            if (window.innerWidth <= 768) {
+                document.getElementById('navMenu').classList.remove('active');
+            }
             
-            // Tabla de precios (se cargará dinámicamente)
-            let pricingTable = {};
+            // Ocultar todas las secciones
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
             
-            // Variables de estado
-            let clients = [];
-            let sellers = [];
-            let services = [];
-            let plans = [];
-            let currentClientId = null;
-            let currentTab = 'info';
-            let currentClientForWhatsapp = null;
-            let currentEditingSeller = null;
-            let currentEditingService = null;
-            let currentEditingPlan = null;
-            let makeWebhook = MAKE_WEBHOOK_URL;
-            let lastSyncStatus = '';
+            // Actualizar botones de navegación
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
             
-            // Plantillas de mensajes de WhatsApp
-            const whatsappTemplates = {
-                pago: `👋 Hola [Nombre], buen día.
+            // Activar botón correspondiente
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.textContent.includes(getSectionName(sectionId))) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Mostrar la sección seleccionada
+            document.getElementById(`${sectionId}-section`).classList.add('active');
+            
+            // Cargar datos según la sección
+            switch(sectionId) {
+                case 'home':
+                    loadHomeProperties();
+                    break;
+                case 'sold':
+                    loadSoldProperties();
+                    updateSoldStats();
+                    break;
+                case 'admin':
+                    if (!checkAdminLogin()) {
+                        showSection('login');
+                        return;
+                    }
+                    loadAdminPanel();
+                    break;
+            }
+        }
 
-📌 Te comparto tu referencia de pago en OXXO:
-
-💳 Referencia: [Referencia]
-
-⏳ Desde hoy cuentas con 25 a 28 días para tu siguiente pago dentro de tu precio de promoción.
-
-❓Cualquier duda, mándame mensaje y te ayudo al momento.
-
-🙏 Gracias por tu preferencia.`,
-
-                instalacion: `👋 Hola [Nombre], buen día.
-
-📅 Te confirmo que tu instalación está programada para la fecha acordada.
-
-🛠️ Nuestro técnico se pondrá en contacto contigo antes de llegar.
-
-❓Cualquier duda, no dudes en contactarme.
-
-🙏 Gracias por confiar en nosotros.`,
-
-                seguimiento: `👋 Hola [Nombre], espero que estés bien.
-
-📞 Te contacto para saber cómo ha sido tu experiencia con nuestro servicio hasta el momento.
-
-⭐ Nos importa mucho tu satisfacción y estamos para resolver cualquier inquietud.
-
-🙏 ¡Gracias por ser parte de nuestra comunidad!`
+        function getSectionName(sectionId) {
+            const names = {
+                'home': 'Casas en Venta',
+                'sold': 'Casas Vendidas',
+                'login': 'Área Admin',
+                'admin': 'Área Admin'
             };
-            
-            // Inicializar
-            initializeApp();
-            
-            // Alternar menú móvil
-            mobileMenuBtn.addEventListener('click', function() {
-                mainControls.classList.toggle('active');
-            });
-            
-            // Alternar tema claro/oscuro
-            themeToggle.addEventListener('click', function() {
-                document.body.setAttribute('data-theme', 
-                    document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-                themeToggle.innerHTML = document.body.getAttribute('data-theme') === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-            });
-            
-            // Cambiar plantilla de WhatsApp
-            whatsappTemplate.addEventListener('change', function() {
-                updateWhatsappPreview();
-            });
-            
-            // Cambiar tipo de servicio
-            serviceType.addEventListener('change', function() {
-                updatePriceInfo();
-                updatePlanOptions();
-            });
-            
-            // Cambiar plan
-            clientPlan.addEventListener('change', function() {
-                updatePriceInfo();
-            });
-            
-            // Cambiar estado
-            clientStatus.addEventListener('change', function() {
-                togglePriceFields();
-            });
-            
-            // Abrir modal para nuevo cliente - ¡ESTA ES LA FUNCIÓN IMPORTANTE!
-            newClientBtn.addEventListener('click', function() {
-                // Mostrar modal para pegar información
-                pasteModal.style.display = 'flex';
-                pasteText.value = '';
-            });
-            
-            // Cerrar modal de pegar
-            closePasteModal.addEventListener('click', function() {
-                pasteModal.style.display = 'none';
-            });
-            
-            // Cancelar pegado
-            cancelPasteBtn.addEventListener('click', function() {
-                pasteModal.style.display = 'none';
-            });
-            
-            // Procesar texto pegado
-            processPasteBtn.addEventListener('click', function() {
-                processPastedText();
-            });
-            
-            // Cerrar modal
-            closeModal.addEventListener('click', function() {
-                clientModal.style.display = 'none';
-            });
-            
-            // Cerrar modal de WhatsApp
-            closeWhatsappModal.addEventListener('click', function() {
-                whatsappModal.style.display = 'none';
-            });
-            
-            // Navegación entre pestañas
-            prevTabBtn.addEventListener('click', function() {
-                navigateTabs('prev');
-            });
-            
-            nextTabBtn.addEventListener('click', function() {
-                navigateTabs('next');
-            });
-            
-            // Guardar cliente
-            clientForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                saveClient();
-            });
-            
-            // Sincronizar con Google Sheets a través de Make.com
-            syncBtn.addEventListener('click', function() {
-                syncWithMake();
-            });
-            
-            // Exportar datos
-            exportBtn.addEventListener('click', function() {
-                exportData();
-            });
-            
-            // Filtrar clientes
-            statusFilter.addEventListener('change', filterClients);
-            sellerFilter.addEventListener('change', filterClients);
-            dateFilter.addEventListener('change', filterClients);
-            commissionFilter.addEventListener('change', filterClients);
-            searchFilter.addEventListener('input', filterClients);
-            
-            // Enviar mensaje por WhatsApp
-            sendWhatsappBtn.addEventListener('click', function() {
-                if (currentClientForWhatsapp) {
-                    const client = clients.find(c => c.id == currentClientForWhatsapp);
-                    if (client) {
-                        const templateType = whatsappTemplate.value;
-                        let message = whatsappTemplates[templateType];
-                        
-                        // Personalizar el mensaje
-                        message = message.replace('[Nombre]', client.name);
-                        message = message.replace('[Referencia]', client.reference || 'N/A');
-                        
-                        const encodedMessage = encodeURIComponent(message);
-                        window.open(`https://wa.me/${cleanPhoneNumber(client.phone)}?text=${encodedMessage}`, '_blank');
-                    }
-                }
-                whatsappModal.style.display = 'none';
-            });
-            
-            // Gestión de vendedores
-            manageSellersBtn.addEventListener('click', function() {
-                hideAllSections();
-                sellersSection.style.display = 'block';
-                loadSellersList();
-            });
-            
-            addSellerBtn.addEventListener('click', function() {
-                addOrUpdateSeller();
-            });
-            
-            // Gestión de servicios
-            manageServicesBtn.addEventListener('click', function() {
-                hideAllSections();
-                servicesSection.style.display = 'block';
-                loadServicesList();
-            });
-            
-            addServiceBtn.addEventListener('click', function() {
-                addOrUpdateService();
-            });
-            
-            // Gestión de planes
-            managePlansBtn.addEventListener('click', function() {
-                hideAllSections();
-                plansSection.style.display = 'block';
-                loadPlansList();
-            });
-            
-            addPlanBtn.addEventListener('click', function() {
-                addOrUpdatePlan();
-            });
-            
-            // Configuración de Make.com
-            makeConfigBtn.addEventListener('click', function() {
-                hideAllSections();
-                makeSection.style.display = 'block';
-                loadMakeConfig();
-            });
-            
-            saveMakeConfigBtn.addEventListener('click', function() {
-                saveMakeConfig();
-            });
-            
-            testMakeBtn.addEventListener('click', function() {
-                testMakeConnection();
-            });
-            
-            syncMakeBtn.addEventListener('click', function() {
-                syncWithMake();
-            });
-            
-            importFromSheetsBtn.addEventListener('click', function() {
-                importFromSheets();
-            });
-            
-            // Funciones de inicialización
-            function initializeApp() {
-                loadFromLocalStorage();
-                loadSellers();
-                loadServices();
-                loadPlans();
-                updatePricingTable();
-                loadClients();
-                setupTabs();
-                
-                // Cargar opciones de servicios y planes en los formularios
-                updateServiceOptions();
-                updatePlanOptions();
-                updatePlanServiceTypeOptions();
-            }
-            
-            function setupTabs() {
-                const tabs = document.querySelectorAll('.tab');
-                tabs.forEach(tab => {
-                    tab.addEventListener('click', function() {
-                        setActiveTab(this.getAttribute('data-tab'));
-                    });
-                });
-            }
-            
-            function setActiveTab(tabName) {
-                currentTab = tabName;
-                
-                // Actualizar pestañas
-                document.querySelectorAll('.tab').forEach(tab => {
-                    tab.classList.remove('active');
-                });
-                document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
-                
-                // Actualizar contenido
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.classList.remove('active');
-                });
-                document.getElementById(`${tabName}-tab`).classList.add('active');
-            }
-            
-            function navigateTabs(direction) {
-                const tabs = ['info', 'sale', 'additional'];
-                const currentIndex = tabs.indexOf(currentTab);
-                
-                if (direction === 'next' && currentIndex < tabs.length - 1) {
-                    setActiveTab(tabs[currentIndex + 1]);
-                } else if (direction === 'prev' && currentIndex > 0) {
-                    setActiveTab(tabs[currentIndex - 1]);
-                }
-            }
-            
-            function loadSellers() {
-                // Cargar vendedores en los filtros y formularios
-                const sellerSelects = [sellerFilter, document.getElementById('clientSeller')];
-                
-                sellerSelects.forEach(select => {
-                    select.innerHTML = '<option value="">Seleccionar vendedor</option>';
-                    sellers.forEach(seller => {
-                        const option = document.createElement('option');
-                        option.value = seller.id;
-                        option.textContent = seller.name;
-                        select.appendChild(option);
-                    });
-                });
-            }
-            
-            function loadServices() {
-                // Cargar servicios en los formularios
-                serviceType.innerHTML = '<option value="">Seleccionar tipo de servicio</option>';
-                services.forEach(service => {
-                    const option = document.createElement('option');
-                        option.value = service.id;
-                        option.textContent = service.name;
-                        serviceType.appendChild(option);
-                });
-            }
-            
-            function loadPlans() {
-                // Cargar planes en los formularios
-                clientPlan.innerHTML = '<option value="">Seleccionar plan</option>';
-                plans.forEach(plan => {
-                    const option = document.createElement('option');
-                    option.value = plan.id;
-                    option.textContent = `${plan.name} (${plan.speed} Mbps)`;
-                    clientPlan.appendChild(option);
-                });
-            }
-            
-            function updatePlanServiceTypeOptions() {
-                // Cargar servicios en el formulario de planes
-                planServiceType.innerHTML = '<option value="">Seleccionar tipo de servicio</option>';
-                services.forEach(service => {
-                    const option = document.createElement('option');
-                    option.value = service.id;
-                    option.textContent = service.name;
-                    planServiceType.appendChild(option);
-                });
-            }
-            
-            function updateServiceOptions() {
-                // Actualizar opciones de servicios en todos los formularios
-                loadServices();
-            }
-            
-            function updatePlanOptions() {
-                // Actualizar opciones de planes basado en el servicio seleccionado
-                const selectedService = serviceType.value;
-                clientPlan.innerHTML = '<option value="">Seleccionar plan</option>';
-                
-                plans.forEach(plan => {
-                    if (!selectedService || plan.serviceType == selectedService) {
-                        const option = document.createElement('option');
-                        option.value = plan.id;
-                        option.textContent = `${plan.name} (${plan.speed} Mbps)`;
-                        clientPlan.appendChild(option);
-                    }
-                });
-            }
-            
-            function updatePricingTable() {
-                // Construir la tabla de precios a partir de los planes
-                pricingTable = {};
-                
-                services.forEach(service => {
-                    pricingTable[service.id] = {};
-                });
-                
-                plans.forEach(plan => {
-                    if (pricingTable[plan.serviceType]) {
-                        pricingTable[plan.serviceType][plan.id] = {
-                            fastPrice: plan.fastPrice,
-                            listPrice: plan.listPrice,
-                            commission: plan.commission
-                        };
-                    }
-                });
-            }
-            
-            function loadClients() {
-                // Datos de ejemplo para junio, julio y agosto 2025
-                if (clients.length === 0) {
-                    clients = [
-                        {
-                            id: 1,
-                            name: 'Juan Martínez',
-                            phone: '5551234567',
-                            email: 'juan@example.com',
-                            status: 'instalada',
-                            seller: '1',
-                            captureDate: '2025-06-15',
-                            installDate: '2025-06-20',
-                            account: '123456',
-                            reference: 'REF123456789',
-                            serviceType: '1',
-                            plan: '1',
-                            listPrice: 620,
-                            fastPrice: 570,
-                            commission: 100,
-                            commissionPaid: false,
-                            address: 'Calle Principal 123, Ciudad',
-                            district: 'no',
-                            comments: 'Cliente satisfecho con la instalación'
-                        },
-                        {
-                            id: 2,
-                            name: 'María González',
-                            phone: '5559876543',
-                            email: 'maria@example.com',
-                            status: 'instalada',
-                            seller: '2',
-                            captureDate: '2025-07-10',
-                            installDate: '2025-07-15',
-                            account: '789012',
-                            reference: 'REF987654321',
-                            serviceType: '2',
-                            plan: '2',
-                            listPrice: 650,
-                            fastPrice: 600,
-                            commission: 300,
-                            commissionPaid: true,
-                            address: 'Avenida Central 456, Ciudad',
-                            district: 'si',
-                            comments: 'Pendiente de segunda instalación'
-                        },
-                        {
-                            id: 3,
-                            name: 'Carlos Rodríguez',
-                            phone: '5554567890',
-                            email: 'carlos@example.com',
-                            status: 'pendiente',
-                            seller: '3',
-                            captureDate: '2025-08-05',
-                            account: '345678',
-                            reference: 'REF456789123',
-                            serviceType: '1',
-                            plan: '3',
-                            listPrice: 950,
-                            fastPrice: 830,
-                            commission: 450,
-                            commissionPaid: false,
-                            address: 'Plaza Mayor 789, Ciudad',
-                            district: 'no',
-                            comments: 'Esperando documentación'
-                        }
-                    ];
-                }
-                
-                updateClientsTable();
-                updateSummaryCards();
-            }
-            
-            function processPastedText() {
-                const text = pasteText.value.trim();
-                if (!text) {
-                    alert('Por favor, pega la información del cliente');
-                    return;
-                }
-                
-                const lines = text.split('\n').map(line => line.trim()).filter(line => line);
-                
-                if (lines.length < 4) {
-                    alert('La información pegada no tiene el formato esperado');
-                    return;
-                }
-                
-                // Procesar la información
-                const clientData = {
-                    name: lines[0], // Primera línea: Nombre
-                    email: '',
-                    phone: '',
-                    address: '',
-                    serviceType: '',
-                    plan: ''
-                };
-                
-                // Buscar email
-                for (let i = 0; i < lines.length; i++) {
-                    if (lines[i].includes('@') && lines[i].includes('.')) {
-                        clientData.email = lines[i];
-                        break;
-                    }
-                }
-                
-                // Buscar teléfono (buscar línea con números)
-                for (let i = 0; i < lines.length; i++) {
-                    if (/[\d]{10,}/.test(lines[i]) && !lines[i].includes('@')) {
-                        clientData.phone = lines[i];
-                        break;
-                    }
-                }
-                
-                // Buscar dirección (líneas después del teléfono y antes del plan)
-                const phoneIndex = lines.findIndex(line => line === clientData.phone);
-                let planIndex = -1;
-                
-                // Buscar plan
-                for (let i = 0; i < lines.length; i++) {
-                    if (lines[i].toLowerCase().includes('plan') || lines[i].toLowerCase().includes('megas') || lines[i].toLowerCase().includes('mega')) {
-                        planIndex = i;
-                        break;
-                    }
-                }
-                
-                // Extraer dirección
-                if (phoneIndex !== -1 && planIndex !== -1 && planIndex > phoneIndex + 1) {
-                    clientData.address = lines.slice(phoneIndex + 1, planIndex).join('\n');
-                }
-                
-                // Extraer información del plan
-                if (planIndex !== -1) {
-                    const planLine = lines[planIndex];
-                    
-                    // Determinar tipo de servicio
-                    if (planLine.toLowerCase().includes('canal') || planLine.toLowerCase().includes('tv')) {
-                        // Buscar el servicio correspondiente
-                        const tvService = services.find(s => s.name.toLowerCase().includes('tv'));
-                        if (tvService) {
-                            clientData.serviceType = tvService.id;
-                        }
-                    } else {
-                        // Buscar servicio de solo internet
-                        const internetService = services.find(s => s.name.toLowerCase().includes('internet') && !s.name.toLowerCase().includes('tv'));
-                        if (internetService) {
-                            clientData.serviceType = internetService.id;
-                        }
-                    }
-                    
-                    // Determinar velocidad del plan
-                    let planSpeed = null;
-                    if (planLine.includes('100')) {
-                        planSpeed = 100;
-                    } else if (planLine.includes('200')) {
-                        planSpeed = 200;
-                    } else if (planLine.includes('300')) {
-                        planSpeed = 300;
-                    } else if (planLine.includes('500')) {
-                        planSpeed = 500;
-                    } else if (planLine.includes('1200')) {
-                        planSpeed = 1200;
-                    }
-                    
-                    // Buscar el plan correspondiente
-                    if (planSpeed && clientData.serviceType) {
-                        const matchingPlan = plans.find(p => p.speed == planSpeed && p.serviceType == clientData.serviceType);
-                        if (matchingPlan) {
-                            clientData.plan = matchingPlan.id;
-                        }
-                    }
-                }
-                
-                // Llenar el formulario con los datos extraídos
-                document.getElementById('clientName').value = clientData.name;
-                document.getElementById('clientPhone').value = clientData.phone;
-                document.getElementById('clientEmail').value = clientData.email;
-                document.getElementById('clientAddress').value = clientData.address;
-                
-                if (clientData.serviceType) {
-                    document.getElementById('serviceType').value = clientData.serviceType;
-                }
-                
-                if (clientData.plan) {
-                    document.getElementById('clientPlan').value = clientData.plan;
-                }
-                
-                // Actualizar precios si hay plan seleccionado
-                if (clientData.serviceType && clientData.plan) {
-                    updatePriceInfo();
-                }
-                
-                // Cerrar modal de pegado y abrir modal de cliente
-                pasteModal.style.display = 'none';
-                currentClientId = null;
-                document.getElementById('modalTitle').textContent = 'Nuevo Cliente';
-                setActiveTab('info');
-                clientModal.style.display = 'flex';
-            }
-            
-            function updateClientsTable() {
-                clientsTableBody.innerHTML = '';
-                
-                if (clients.length === 0) {
-                    clientsTableBody.innerHTML = '<tr><td colspan="8" style="text-align: center;">No hay clientes para mostrar</td></tr>';
-                    return;
-                }
-                
-                clients.forEach(client => {
-                    const row = document.createElement('tr');
-                    
-                    // Obtener información del vendedor
-                    const seller = sellers.find(s => s.id == client.seller);
-                    const sellerName = seller ? seller.name : 'N/A';
-                    
-                    // Obtener información del servicio y plan
-                    let planText = '';
-                    if (client.serviceType && client.plan) {
-                        const service = services.find(s => s.id == client.serviceType);
-                        const plan = plans.find(p => p.id == client.plan);
-                        
-                        if (service && plan) {
-                            planText = `${service.name} ${plan.speed} Mbps`;
-                        }
-                    }
-                    
-                    // Determinar el texto de comisión (solo mostrar si el estado es "instalada")
-                    let commissionText = '';
-                    if (client.status === 'instalada' && client.commission) {
-                        commissionText = `$${client.commission}`;
-                        if (client.commissionPaid) {
-                            commissionText += ' (Pagada)';
-                        } else {
-                            commissionText += ' (Pendiente)';
-                        }
-                    }
-                    
-                    row.innerHTML = `
-                        <td>${client.name}</td>
-                        <td>${client.phone}</td>
-                        <td><span class="chip status-${client.status}">${getStatusText(client.status)}</span></td>
-                        <td>${sellerName}</td>
-                        <td>${formatDate(client.captureDate)}</td>
-                        <td>${planText}</td>
-                        <td>${commissionText}</td>
-                        <td>
-                            <button class="whatsapp-btn" data-id="${client.id}"><i class="fab fa-whatsapp"></i></button>
-                            <button class="secondary" data-id="${client.id}"><i class="fas fa-edit"></i></button>
-                            <button class="accent" data-id="${client.id}"><i class="fas fa-trash"></i></button>
-                        </td>
-                    `;
-                    
-                    clientsTableBody.appendChild(row);
-                });
-                
-                // Agregar event listeners a los botones
-                document.querySelectorAll('.whatsapp-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const clientId = this.getAttribute('data-id');
-                        openWhatsappModal(clientId);
-                    });
-                });
-                
-                document.querySelectorAll('button.secondary').forEach(btn => {
-                    if (!btn.classList.contains('whatsapp-btn')) {
-                        btn.addEventListener('click', function() {
-                            const clientId = this.getAttribute('data-id');
-                            editClient(clientId);
-                        });
-                    }
-                });
-                
-                document.querySelectorAll('button.accent').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const clientId = this.getAttribute('data-id');
-                        deleteClient(clientId);
-                    });
-                });
-            }
-            
-            function updateSummaryCards() {
-                document.getElementById('totalClients').textContent = clients.length;
-                
-                const pendingInstall = clients.filter(client => 
-                    ['instalar', 'transito', 'trabajando'].includes(client.status)
-                ).length;
-                document.getElementById('pendingInstall').textContent = pendingInstall;
-                
-                const today = new Date();
-                const month = today.getMonth() + 1;
-                const year = today.getFullYear();
-                
-                const monthlyInstall = clients.filter(client => {
-                    if (client.installDate) {
-                        const installDate = new Date(client.installDate);
-                        return installDate.getMonth() + 1 === month && 
-                               installDate.getFullYear() === year &&
-                               client.status === 'instalada';
-                    }
-                    return false;
-                }).length;
-                document.getElementById('monthlyInstall').textContent = monthlyInstall;
-                
-                // Comisiones pendientes (solo instaladas y no pagadas)
-                const pendingCommissions = clients.reduce((total, client) => {
-                    if (client.commission && client.status === 'instalada' && !client.commissionPaid) {
-                        return total + client.commission;
-                    }
-                    return total;
-                }, 0);
-                document.getElementById('pendingCommissions').textContent = `$${pendingCommissions}`;
-                
-                // Comisiones pagadas
-                const paidCommissions = clients.reduce((total, client) => {
-                    if (client.commission && client.commissionPaid) {
-                        return total + client.commission;
-                    }
-                    return total;
-                }, 0);
-                document.getElementById('paidCommissions').textContent = `$${paidCommissions}`;
-            }
-            
-            function getStatusText(status) {
-                const statusMap = {
-                    'prospecto': 'Prospecto',
-                    'interesado': 'Interesado',
-                    'pendiente': 'Pendiente doc',
-                    'instalar': 'Por instalar',
-                    'transito': 'En tránsito',
-                    'trabajando': 'Trabajando',
-                    'instalada': 'Instalada',
-                    'perdida': 'Perdida',
-                    'cobertura': 'Sin cobertura',
-                    'factibilidad': 'Factibilidad',
-                    'planta': 'Planta Externa'
-                };
-                
-                return statusMap[status] || status;
-            }
-            
-            function formatDate(dateString) {
-                if (!dateString) return 'N/A';
-                
-                const date = new Date(dateString);
-                return date.toLocaleDateString('es-ES');
-            }
-            
-            function openWhatsappModal(clientId) {
-                const client = clients.find(c => c.id == clientId);
-                if (client) {
-                    currentClientForWhatsapp = clientId;
-                    updateWhatsappPreview();
-                    whatsappModal.style.display = 'flex';
-                }
-            }
-            
-            function updateWhatsappPreview() {
-                if (!currentClientForWhatsapp) return;
-                
-                const client = clients.find(c => c.id == currentClientForWhatsapp);
-                if (client) {
-                    const templateType = whatsappTemplate.value;
-                    let message = whatsappTemplates[templateType];
-                    
-                    // Personalizar el mensaje
-                    message = message.replace('[Nombre]', client.name);
-                    message = message.replace('[Referencia]', client.reference || 'N/A');
-                    
-                    whatsappPreview.textContent = message;
-                }
-            }
-            
-            function cleanPhoneNumber(phone) {
-                // Eliminar cualquier carácter que no sea número
-                return phone.replace(/\D/g, '');
-            }
-            
-            function updatePriceInfo() {
-                const selectedService = serviceType.value;
-                const selectedPlan = clientPlan.value;
-                
-                if (selectedService && selectedPlan) {
-                    priceInfo.style.display = 'block';
-                    
-                    // Limpiar tabla de precios
-                    priceInfoBody.innerHTML = '';
-                    
-                    // Buscar información del plan seleccionado
-                    const plan = plans.find(p => p.id == selectedPlan);
-                    if (plan) {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${plan.name} (${plan.speed} Mbps)</td>
-                            <td>$${plan.fastPrice}</td>
-                            <td>$${plan.listPrice}</td>
-                            <td>$${plan.commission}</td>
-                        `;
-                        priceInfoBody.appendChild(row);
-                        
-                        // Actualizar campos de precio
-                        clientListPrice.value = plan.listPrice;
-                        clientFastPrice.value = plan.fastPrice;
-                        clientCommission.value = plan.commission;
-                    }
-                } else {
-                    priceInfo.style.display = 'none';
-                }
-            }
-            
-            function togglePriceFields() {
-                const status = clientStatus.value;
-                
-                if (status === 'instalada') {
-                    priceFields.style.display = 'block';
-                    commissionPaidSection.style.display = 'flex';
-                } else {
-                    priceFields.style.display = 'none';
-                    commissionPaidSection.style.display = 'none';
-                }
-            }
-            
-            function editClient(clientId) {
-                const client = clients.find(c => c.id == clientId);
-                if (client) {
-                    currentClientId = clientId;
-                    document.getElementById('modalTitle').textContent = 'Editar Cliente';
-                    
-                    // Llenar el formulario con los datos del cliente
-                    document.getElementById('clientName').value = client.name || '';
-                    document.getElementById('clientPhone').value = client.phone || '';
-                    document.getElementById('clientAdditionalPhone').value = client.additionalPhone || '';
-                    document.getElementById('clientEmail').value = client.email || '';
-                    document.getElementById('clientAddress').value = client.address || '';
-                    document.getElementById('clientStatus').value = client.status || 'prospecto';
-                    document.getElementById('serviceType').value = client.serviceType || '';
-                    document.getElementById('clientPlan').value = client.plan || '';
-                    document.getElementById('clientListPrice').value = client.listPrice || '';
-                    document.getElementById('clientFastPrice').value = client.fastPrice || '';
-                    document.getElementById('clientCommission').value = client.commission || '';
-                    document.getElementById('clientAccount').value = client.account || '';
-                    document.getElementById('clientReference').value = client.reference || '';
-                    document.getElementById('clientCaptureDate').value = client.captureDate || '';
-                    document.getElementById('clientInstallDate').value = client.installDate || '';
-                    document.getElementById('clientDistrict').value = client.district || 'no';
-                    document.getElementById('clientSeller').value = client.seller || '';
-                    document.getElementById('clientComments').value = client.comments || '';
-                    document.getElementById('commissionPaid').checked = client.commissionPaid || false;
-                    
-                    // Actualizar información de precios
-                    updatePriceInfo();
-                    togglePriceFields();
-                    
-                    setActiveTab('info');
-                    clientModal.style.display = 'flex';
-                }
-            }
-            
-            function deleteClient(clientId) {
-                if (confirm('¿Estás seguro de que quieres eliminar este cliente?')) {
-                    const client = clients.find(c => c.id == clientId);
-                    clients = clients.filter(client => client.id != clientId);
-                    updateClientsTable();
-                    updateSummaryCards();
-                    saveToLocalStorage();
-                    
-                    // Sincronizar con Make.com
-                    syncWithMake('delete_client', client);
-                    
-                    showNotification('Cliente eliminado correctamente', 'success');
-                }
-            }
-            
-            function saveClient() {
-                const clientData = {
-                    name: document.getElementById('clientName').value,
-                    phone: document.getElementById('clientPhone').value,
-                    additionalPhone: document.getElementById('clientAdditionalPhone').value,
-                    email: document.getElementById('clientEmail').value,
-                    address: document.getElementById('clientAddress').value,
-                    status: document.getElementById('clientStatus').value,
-                    serviceType: document.getElementById('serviceType').value,
-                    plan: document.getElementById('clientPlan').value,
-                    listPrice: document.getElementById('clientListPrice').value ? parseFloat(document.getElementById('clientListPrice').value) : null,
-                    fastPrice: document.getElementById('clientFastPrice').value ? parseFloat(document.getElementById('clientFastPrice').value) : null,
-                    commission: document.getElementById('clientCommission').value ? parseFloat(document.getElementById('clientCommission').value) : null,
-                    account: document.getElementById('clientAccount').value,
-                    reference: document.getElementById('clientReference').value,
-                    captureDate: document.getElementById('clientCaptureDate').value,
-                    installDate: document.getElementById('clientInstallDate').value,
-                    district: document.getElementById('clientDistrict').value,
-                    seller: document.getElementById('clientSeller').value,
-                    comments: document.getElementById('clientComments').value,
-                    commissionPaid: document.getElementById('commissionPaid').checked
-                };
-                
-                if (currentClientId) {
-                    // Editar cliente existente
-                    const index = clients.findIndex(client => client.id == currentClientId);
-                    if (index !== -1) {
-                        clients[index] = { ...clients[index], ...clientData };
-                        // Sincronizar con Make.com
-                        syncWithMake('update_client', clients[index]);
-                    }
-                } else {
-                    // Nuevo cliente
-                    const newId = clients.length > 0 ? Math.max(...clients.map(c => c.id)) + 1 : 1;
-                    const newClient = { id: newId, ...clientData };
-                    clients.push(newClient);
-                    // Sincronizar con Make.com
-                    syncWithMake('add_client', newClient);
-                }
-                
-                updateClientsTable();
-                updateSummaryCards();
-                saveToLocalStorage();
-                clientModal.style.display = 'none';
-                
-                showNotification('Cliente guardado correctamente', 'success');
-            }
-            
-            function filterClients() {
-                const status = statusFilter.value;
-                const seller = sellerFilter.value;
-                const date = dateFilter.value;
-                const commissionStatus = commissionFilter.value;
-                const search = searchFilter.value.toLowerCase();
-                
-                let filteredClients = clients;
-                
-                if (status) {
-                    filteredClients = filteredClients.filter(client => client.status === status);
-                }
-                
-                if (seller) {
-                    filteredClients = filteredClients.filter(client => client.seller === seller);
-                }
-                
-                if (date) {
-                    filteredClients = filteredClients.filter(client => {
-                        if (!client.captureDate) return false;
-                        return client.captureDate.startsWith(date);
-                    });
-                }
-                
-                if (commissionStatus) {
-                    if (commissionStatus === 'pendiente') {
-                        filteredClients = filteredClients.filter(client => 
-                            client.status === 'instalada' && !client.commissionPaid
-                        );
-                    } else if (commissionStatus === 'pagada') {
-                        filteredClients = filteredClients.filter(client => client.commissionPaid);
-                    }
-                }
-                
-                if (search) {
-                    filteredClients = filteredClients.filter(client => 
-                        client.name.toLowerCase().includes(search) || 
-                        (client.phone && client.phone.includes(search)) ||
-                        (client.account && client.account.includes(search)) ||
-                        (client.address && client.address.toLowerCase().includes(search))
-                    );
-                }
-                
-                // Actualizar tabla con clientes filtrados
-                clientsTableBody.innerHTML = '';
-                
-                if (filteredClients.length === 0) {
-                    clientsTableBody.innerHTML = '<tr><td colspan="8" style="text-align: center;">No hay clientes que coincidan con los filtros</td></tr>';
-                    return;
-                }
-                
-                filteredClients.forEach(client => {
-                    const row = document.createElement('tr');
-                    
-                    // Obtener información del vendedor
-                    const seller = sellers.find(s => s.id == client.seller);
-                    const sellerName = seller ? seller.name : 'N/A';
-                    
-                    // Obtener información del servicio y plan
-                    let planText = '';
-                    if (client.serviceType && client.plan) {
-                        const service = services.find(s => s.id == client.serviceType);
-                        const plan = plans.find(p => p.id == client.plan);
-                        
-                        if (service && plan) {
-                            planText = `${service.name} ${plan.speed} Mbps`;
-                        }
-                    }
-                    
-                    // Determinar el texto de comisión (solo mostrar si el estado es "instalada")
-                    let commissionText = '';
-                    if (client.status === 'instalada' && client.commission) {
-                        commissionText = `$${client.commission}`;
-                        if (client.commissionPaid) {
-                            commissionText += ' (Pagada)';
-                        } else {
-                            commissionText += ' (Pendiente)';
-                        }
-                    }
-                    
-                    row.innerHTML = `
-                        <td>${client.name}</td>
-                        <td>${client.phone}</td>
-                        <td><span class="chip status-${client.status}">${getStatusText(client.status)}</span></td>
-                        <td>${sellerName}</td>
-                        <td>${formatDate(client.captureDate)}</td>
-                        <td>${planText}</td>
-                        <td>${commissionText}</td>
-                        <td>
-                            <button class="whatsapp-btn" data-id="${client.id}"><i class="fab fa-whatsapp"></i></button>
-                            <button class="secondary" data-id="${client.id}"><i class="fas fa-edit"></i></button>
-                            <button class="accent" data-id="${client.id}"><i class="fas fa-trash"></i></button>
-                        </td>
-                    `;
-                    
-                    clientsTableBody.appendChild(row);
-                });
-                
-                // Agregar event listeners a los botones de la tabla filtrada
-                document.querySelectorAll('.whatsapp-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const clientId = this.getAttribute('data-id');
-                        openWhatsappModal(clientId);
-                    });
-                });
-                
-                document.querySelectorAll('button.secondary').forEach(btn => {
-                    if (!btn.classList.contains('whatsapp-btn')) {
-                        btn.addEventListener('click', function() {
-                            const clientId = this.getAttribute('data-id');
-                            editClient(clientId);
-                        });
-                    }
-                });
-                
-                document.querySelectorAll('button.accent').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const clientId = this.getAttribute('data-id');
-                        deleteClient(clientId);
-                    });
-                });
-            }
-            
-            function syncWithMake(action = 'full_sync', specificData = null) {
-                updateSyncStatus('syncing', 'Sincronizando...');
-                
-                let syncData = {
-                    action: action,
-                    timestamp: new Date().toISOString(),
-                    operationId: 'op_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
-                };
+            return names[sectionId] || '';
+        }
 
-                // Función para formatear fecha de YYYY-MM-DD a DD/MM/YYYY
-                function formatDateForSheets(dateString) {
-                    if (!dateString) return '';
-                    const date = new Date(dateString);
-                    const day = date.getDate().toString().padStart(2, '0');
-                    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-                    const year = date.getFullYear();
-                    return `${day}/${month}/${year}`;
-                }
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+            
+            // Animación hamburguesa
+            const spans = document.querySelectorAll('.hamburger span');
+            if (navMenu.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        }
 
-                // Función para obtener nombre del vendedor
-                function getSellerName(sellerId) {
-                    if (!sellerId) return '';
-                    const seller = sellers.find(s => s.id == sellerId);
-                    return seller ? seller.name : '';
-                }
+        // =============================================
+        // PÁGINA PRINCIPAL - CASAS EN VENTA
+        // =============================================
+        function loadHomeProperties() {
+            const disponibles = propiedades.filter(p => !p.vendida);
+            renderProperties(disponibles, 'properties-container');
+            
+            // Actualizar contador
+            document.getElementById('count').textContent = disponibles.length;
+            document.getElementById('property-counter').innerHTML = 
+                `<i class="fas fa-home"></i> Mostrando ${disponibles.length} propiedad${disponibles.length !== 1 ? 'es' : ''} disponible${disponibles.length !== 1 ? 's' : ''}`;
+            
+            // Mostrar/ocultar mensaje sin resultados
+            const noResults = document.getElementById('no-results');
+            if (disponibles.length === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        }
 
-                // Función para obtener nombre del plan
-                function getPlanName(planId) {
-                    if (!planId) return '';
-                    const plan = plans.find(p => p.id == planId);
-                    return plan ? `${plan.name} (${plan.speed} Mbps)` : '';
-                }
-
-                // Función para obtener nombre del servicio
-                function getServiceName(serviceId) {
-                    if (!serviceId) return '';
-                    const service = services.find(s => s.id == serviceId);
-                    return service ? service.name : '';
-                }
-
-                if (action === 'full_sync') {
-                    // Enviar datos en el formato que Make.com espera
-                    syncData.clients = clients.map(client => {
-                        return {
-                            // Formato corregido para el mapeo en Make.com
-                            id: client.id,
-                            name: client.name,
-                            email: client.email || '',
-                            phone: client.phone,
-                            status: client.status, // Mantener el valor original (minúsculas)
-                            sellerName: getSellerName(client.seller),
-                            captureDate: formatDateForSheets(client.captureDate), // Formatear fecha
-                            planName: getPlanName(client.plan),
-                            listPrice: client.listPrice || '',
-                            fastPrice: client.fastPrice || '',
-                            commission: client.commission || '',
-                            installDate: formatDateForSheets(client.installDate), // Formatear fecha
-                            commissionPaid: client.commissionPaid ? 'Sí' : 'No', // Convertir a Sí/No
-                            reference: client.reference || '',
-                            address: client.address || '',
-                            district: client.district === 'si' ? 'Sí' : 'No',
-                            comments: client.comments || '',
-                            additionalPhone: client.additionalPhone || '',
-                            account: client.account || '',
-                            serviceType: getServiceName(client.serviceType) // Mostrar nombre en lugar de ID
-                        };
-                    });
-                } else if (specificData) {
-                    // Para acciones individuales
-                    syncData.client = {
-                        id: specificData.id,
-                        name: specificData.name,
-                        email: specificData.email || '',
-                        phone: specificData.phone,
-                        status: specificData.status, // Mantener el valor original (minúsculas)
-                        sellerName: getSellerName(specificData.seller),
-                        captureDate: formatDateForSheets(specificData.captureDate), // Formatear fecha
-                        planName: getPlanName(specificData.plan),
-                        listPrice: specificData.listPrice || '',
-                        fastPrice: specificData.fastPrice || '',
-                        commission: specificData.commission || '',
-                        installDate: formatDateForSheets(specificData.installDate), // Formatear fecha
-                        commissionPaid: specificData.commissionPaid ? 'Sí' : 'No', // Convertir a Sí/No
-                        reference: specificData.reference || '',
-                        address: specificData.address || '',
-                        district: specificData.district === 'si' ? 'Sí' : 'No',
-                        comments: specificData.comments || '',
-                        additionalPhone: specificData.additionalPhone || '',
-                        account: specificData.account || '',
-                        serviceType: getServiceName(specificData.serviceType) // Mostrar nombre en lugar de ID
-                    };
-                }
-                
-                // Enviar datos a Make.com
-                fetch(makeWebhook, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(syncData)
-                })
-                .then(async response => {
-                    const responseText = await response.text();
-                    
-                    if (!response.ok) {
-                        throw new Error(`Error ${response.status}: ${response.statusText}`);
-                    }
-                    
-                    try {
-                        return JSON.parse(responseText);
-                    } catch (e) {
-                        return { success: true, message: responseText };
-                    }
-                })
-                .then(data => {
-                    if (data && (data.success === true || data.status === 'success')) {
-                        updateSyncStatus('connected', 'Sincronizado');
-                        showNotification('Datos sincronizados correctamente con Make.com', 'success');
-                        lastSyncStatus = 'success';
-                    } else {
-                        updateSyncStatus('connected', 'Sincronizado');
-                        showNotification('Sincronización completada', 'success');
-                        lastSyncStatus = 'success';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error sincronizando con Make.com:', error);
-                    updateSyncStatus('disconnected', 'Error de sincronización');
-                    showNotification(`Error al sincronizar: ${error.message}`, 'error');
-                    lastSyncStatus = 'error';
-                });
+        function filterProperties() {
+            const municipio = document.getElementById('filter-municipio').value;
+            const priceMax = parseFloat(document.getElementById('filter-price').value) || Infinity;
+            
+            let filtered = propiedades.filter(p => !p.vendida);
+            
+            if (municipio) {
+                filtered = filtered.filter(p => p.municipio === municipio);
             }
             
-            function updateSyncStatus(status, message) {
-                // Actualizar la interfaz con el estado de sincronización
-                const statusElement = document.getElementById('makeStatusText');
-                if (statusElement) {
-                    statusElement.textContent = message;
-                    
-                    // Cambiar color según el estado
-                    if (status === 'connected') {
-                        statusElement.style.color = 'green';
-                    } else if (status === 'syncing') {
-                        statusElement.style.color = 'orange';
-                    } else if (status === 'disconnected') {
-                        statusElement.style.color = 'red';
-                    }
-                }
+            if (priceMax && !isNaN(priceMax)) {
+                filtered = filtered.filter(p => p.costo_propiedad <= priceMax);
             }
             
-            function exportData() {
-                // Crear contenido CSV
-                let csvContent = "Nombre,Correo,Teléfono,Estado,Vendedor,Fecha Captura,Plan,Precio Lista,Precio Pronto Pago,Comisión,Fecha Instalada,Comisión Pagada,Referencia,Dirección,¿Es Distrito?\n";
-                
-                clients.forEach(client => {
-                    // Obtener información del vendedor
-                    const seller = sellers.find(s => s.id == client.seller);
-                    const sellerName = seller ? seller.name : 'N/A';
+            renderProperties(filtered, 'properties-container');
+            
+            // Actualizar contador
+            document.getElementById('count').textContent = filtered.length;
+            document.getElementById('property-counter').innerHTML = 
+                `<i class="fas fa-home"></i> Mostrando ${filtered.length} propiedad${filtered.length !== 1 ? 'es' : ''} disponible${filtered.length !== 1 ? 's' : ''}`;
+            
+            // Mostrar/ocultar mensaje sin resultados
+            const noResults = document.getElementById('no-results');
+            if (filtered.length === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        }
+
+        function clearFilters() {
+            document.getElementById('filter-municipio').value = '';
+            document.getElementById('filter-price').value = '';
+            loadHomeProperties();
+        }
+
+        // =============================================
+        // PÁGINA CASAS VENDIDAS
+        // =============================================
+        function loadSoldProperties() {
+            const vendidas = propiedades.filter(p => p.vendida);
+            renderProperties(vendidas, 'sold-properties-container', true);
+        }
+
+        function updateSoldStats() {
+            const vendidas = propiedades.filter(p => p.vendida);
+            const totalVentas = vendidas.reduce((sum, prop) => sum + prop.costo_propiedad, 0);
+            const avgPrice = vendidas.length > 0 ? Math.round(totalVentas / vendidas.length) : 0;
+            const successRate = propiedades.length > 0 ? Math.round((vendidas.length / propiedades.length) * 100) : 0;
+            
+            document.getElementById('total-sold').textContent = vendidas.length;
+            document.getElementById('total-sales').textContent = `$${totalVentas.toLocaleString('es-MX')}`;
+            document.getElementById('avg-price').textContent = `$${avgPrice.toLocaleString('es-MX')}`;
+            document.getElementById('success-rate').textContent = `${successRate}%`;
+        }
+
+        // =============================================
+        // RENDERIZADO DE PROPIEDADES
+        // =============================================
+        function renderProperties(props, containerId, isSoldPage = false) {
+            const container = document.getElementById(containerId);
+            
+            if (props.length === 0) {
+                container.innerHTML = `
+                    <div class="no-results" style="display: block; grid-column: 1 / -1;">
+                        <i class="fas fa-${isSoldPage ? 'home' : 'search'}"></i>
+                        <h3>No hay propiedades ${isSoldPage ? 'vendidas' : 'disponibles'}</h3>
+                        <p>${isSoldPage ? 'Las propiedades vendidas aparecerán aquí' : 'Intenta con otros filtros de búsqueda'}</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = props.map(prop => `
+                <div class="property-card">
+                    <div class="property-image">
+                        <img src="${prop.imagen_url}" alt="Propiedad en ${prop.municipio}" loading="lazy">
+                        <span class="property-badge ${prop.vendida ? 'badge-sold' : 'badge-available'}">
+                            ${prop.vendida ? 'VENDIDA' : 'DISPONIBLE'}
+                        </span>
+                    </div>
                     
-                    // Obtener información del servicio y plan
-                    let planText = '';
-                    if (client.serviceType && client.plan) {
-                        const service = services.find(s => s.id == client.serviceType);
-                        const plan = plans.find(p => p.id == client.plan);
+                    <div class="property-info">
+                        <div class="property-title">
+                            ${prop.municipio}
+                            ${prop.vendida ? '<i class="fas fa-check-circle" style="color: #27ae60;"></i>' : ''}
+                        </div>
                         
-                        if (service && plan) {
-                            planText = `${service.name} ${plan.speed} Mbps`;
-                        }
-                    }
-                    
-                    csvContent += `"${client.name}",${client.email || ''},${client.phone},${getStatusText(client.status)},${sellerName},${client.captureDate || ''},"${planText}",${client.listPrice || ''},${client.fastPrice || ''},${client.commission || ''},${client.installDate || ''},${client.commissionPaid ? 'Sí' : 'No'},${client.reference || ''},"${client.address || ''}",${client.district || 'No'}\n`;
-                });
-                
-                // Crear blob y descargar
-                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement("a");
-                link.setAttribute("href", url);
-                link.setAttribute("download", "clientes.csv");
-                link.style.visibility = 'hidden';
+                        <p class="property-detail">
+                            <strong><i class="fas fa-map-marker-alt"></i> Colonia:</strong> ${prop.colonia}
+                        </p>
+                        
+                        <p class="property-detail">
+                            <strong><i class="fas fa-file-alt"></i> Descripción:</strong><br>
+                            ${prop.descripcion.replace(/\n/g, '<br>')}
+                        </p>
+                        
+                        <div class="property-prices">
+                            <div class="price-item">
+                                <span><i class="fas fa-dollar-sign"></i> Precio:</span>
+                                <span class="price-value">$${prop.costo_propiedad.toLocaleString('es-MX')}</span>
+                            </div>
+                            <div class="price-item">
+                                <span><i class="fas fa-file-invoice-dollar"></i> Avalúo:</span>
+                                <span class="price-value">$${prop.costo_avaluo.toLocaleString('es-MX')}</span>
+                            </div>
+                            <div class="price-item">
+                                <span><i class="fas fa-file-contract"></i> Carta:</span>
+                                <span class="price-value">$${prop.costo_carta_no_propiedad.toLocaleString('es-MX')}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="property-actions">
+                            <a href="${prop.google_maps_link}" target="_blank" class="action-btn btn-map">
+                                <i class="fas fa-map-marked-alt"></i> Ver en Maps
+                            </a>
+                            
+                            <button onclick="downloadImage('${prop.imagen_url}', '${prop.municipio}')" 
+                                    class="action-btn btn-download" ${prop.vendida ? 'disabled style="opacity:0.6"' : ''}>
+                                <i class="fas fa-download"></i> Descargar Imagen
+                            </button>
+                            
+                            <button onclick="copyPropertyInfo(${prop.id})" class="action-btn btn-copy">
+                                <i class="fas fa-copy"></i> Copiar Info
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // =============================================
+        // FUNCIONES PARA CLIENTES
+        // =============================================
+        function downloadImage(imageUrl, propertyName) {
+            // Para imágenes locales (data URLs)
+            if (imageUrl.startsWith('data:')) {
+                const link = document.createElement('a');
+                link.href = imageUrl;
+                link.download = `propiedad_${propertyName}_${Date.now()}.jpg`;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                
-                showNotification('Datos exportados correctamente', 'success');
+            } else {
+                // Para URLs externas
+                window.open(imageUrl, '_blank');
             }
+            showNotification('📥 Imagen descargada exitosamente');
+        }
+
+        function copyPropertyInfo(id) {
+            const propiedad = propiedades.find(p => p.id === id);
+            if (!propiedad) return;
             
-            function saveToLocalStorage() {
-                // Guardar datos en localStorage
-                localStorage.setItem('crm-clients', JSON.stringify(clients));
-                localStorage.setItem('crm-sellers', JSON.stringify(sellers));
-                localStorage.setItem('crm-services', JSON.stringify(services));
-                localStorage.setItem('crm-plans', JSON.stringify(plans));
-                localStorage.setItem('crm-make-webhook', makeWebhook);
+            const textToCopy = `
+MUNICIPIO: ${propiedad.municipio}
+
+COLONIA: ${propiedad.colonia.replace(/<br>/g, ' ')}
+
+DESCRIPCIÓN:
+${propiedad.descripcion}
+
+COSTO DE LA PROPIEDAD: $${propiedad.costo_propiedad.toLocaleString('es-MX')}
+
+COSTO DEL AVALÚO: $${propiedad.costo_avaluo.toLocaleString('es-MX')}
+
+COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleString('es-MX')}
+
+👉 VER UBICACIÓN EN GOOGLE MAPS: ${propiedad.google_maps_link}
+            `.trim();
+            
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(textToCopy)
+                    .then(() => showNotification('✅ Información copiada al portapapeles'))
+                    .catch(() => fallbackCopy(textToCopy));
+            } else {
+                fallbackCopy(textToCopy);
             }
+        }
+
+        function fallbackCopy(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            showNotification('✅ Información copiada al portapapeles');
+        }
+
+        // =============================================
+        // SISTEMA DE LOGIN
+        // =============================================
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            function loadFromLocalStorage() {
-                // Cargar datos desde localStorage
-                const savedClients = localStorage.getItem('crm-clients');
-                const savedSellers = localStorage.getItem('crm-sellers');
-                const savedServices = localStorage.getItem('crm-services');
-                const savedPlans = localStorage.getItem('crm-plans');
-                const savedMakeWebhook = localStorage.getItem('crm-make-webhook');
-                
-                if (savedClients) {
-                    clients = JSON.parse(savedClients);
-                }
-                
-                if (savedSellers) {
-                    sellers = JSON.parse(savedSellers);
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Buscar usuario
+            const usuario = usuarios.find(u => u.email === email && u.password === password && u.activo);
+            
+            if (usuario) {
+                if (usuario.es_admin) {
+                    localStorage.setItem('admin_logged_in', 'true');
+                    localStorage.setItem('current_admin', email);
+                    showSection('admin');
+                    showNotification('✅ ¡Bienvenido Administrador!');
                 } else {
-                    // Datos predeterminados de vendedores
-                    sellers = [
-                        { id: '1', name: 'Juan Pérez', phone: '555-123-4567' },
-                        { id: '2', name: 'María García', phone: '555-987-6543' },
-                        { id: '3', name: 'Carlos López', phone: '555-456-7890' },
-                        { id: '4', name: 'Ana Rodríguez', phone: '555-111-2233' }
-                    ];
+                    showNotification('❌ Solo los administradores pueden acceder', 'error');
                 }
-                
-                if (savedServices) {
-                    services = JSON.parse(savedServices);
-                } else {
-                    // Datos predeterminados de servicios
-                    services = [
-                        { id: '1', name: 'Solo Internet' },
-                        { id: '2', name: 'Internet + TV' }
-                    ];
-                }
-                
-                if (savedPlans) {
-                    plans = JSON.parse(savedPlans);
-                } else {
-                    // Datos predeterminados de planes
-                    plans = [
-                        { id: '1', name: 'Básico', speed: 100, serviceType: '1', fastPrice: 460, listPrice: 510, commission: 60 },
-                        { id: '2', name: 'Básico TV', speed: 100, serviceType: '2', fastPrice: 600, listPrice: 650, commission: 300 },
-                        { id: '3', name: 'Avanzado', speed: 200, serviceType: '1', fastPrice: 570, listPrice: 620, commission: 100 },
-                        { id: '4', name: 'Avanzado TV', speed: 200, serviceType: '2', fastPrice: 710, listPrice: 760, commission: 600 },
-                        { id: '5', name: 'Premium', speed: 300, serviceType: '1', fastPrice: 680, listPrice: 730, commission: 200 },
-                        { id: '6', name: 'Premium TV', speed: 300, serviceType: '2', fastPrice: 820, listPrice: 870, commission: 850 },
-                        { id: '7', name: 'Ultra', speed: 500, serviceType: '1', fastPrice: 830, listPrice: 950, commission: 450 },
-                        { id: '8', name: 'Ultra TV', speed: 500, serviceType: '2', fastPrice: 1000, listPrice: 1120, commission: 1100 },
-                        { id: '9', name: 'Máximo', speed: 1200, serviceType: '1', fastPrice: 1470, listPrice: 1590, commission: 750 },
-                        { id: '10', name: 'Máximo TV', speed: 1200, serviceType: '2', fastPrice: 1640, listPrice: 1760, commission: 1500 }
-                    ];
-                }
-                
-                if (savedMakeWebhook) {
-                    makeWebhook = savedMakeWebhook;
-                }
-            }
-            
-            function hideAllSections() {
-                const sections = document.querySelectorAll('.management-section');
-                sections.forEach(section => {
-                    section.style.display = 'none';
-                });
-            }
-            
-            function loadSellersList() {
-                sellersList.innerHTML = '';
-                
-                sellers.forEach(seller => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `
-                        <div>
-                            <strong>${seller.name}</strong>
-                            <br>
-                            <span>${seller.phone}</span>
-                        </div>
-                        <div class="management-actions">
-                            <button class="secondary edit-seller" data-id="${seller.id}"><i class="fas fa-edit"></i></button>
-                            <button class="accent delete-seller" data-id="${seller.id}"><i class="fas fa-trash"></i></button>
-                        </div>
-                    `;
-                    sellersList.appendChild(li);
-                });
-                
-                // Agregar event listeners a los botones
-                document.querySelectorAll('.edit-seller').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const sellerId = this.getAttribute('data-id');
-                        editSeller(sellerId);
-                    });
-                });
-                
-                document.querySelectorAll('.delete-seller').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const sellerId = this.getAttribute('data-id');
-                        deleteSeller(sellerId);
-                    });
-                });
-            }
-            
-            function addOrUpdateSeller() {
-                const name = sellerName.value.trim();
-                const phone = sellerPhone.value.trim();
-                
-                if (!name) {
-                    alert('Por favor, ingresa el nombre del vendedor');
-                    return;
-                }
-                
-                if (currentEditingSeller) {
-                    // Editar vendedor existente
-                    const seller = sellers.find(s => s.id == currentEditingSeller);
-                    if (seller) {
-                        seller.name = name;
-                        seller.phone = phone;
-                    }
-                    currentEditingSeller = null;
-                    addSellerBtn.innerHTML = '<i class="fas fa-plus"></i> Agregar Vendedor';
-                } else {
-                    // Agregar nuevo vendedor
-                    const newId = sellers.length > 0 ? Math.max(...sellers.map(s => parseInt(s.id))) + 1 : 1;
-                    sellers.push({
-                        id: newId.toString(),
-                        name: name,
-                        phone: phone
-                    });
-                }
-                
-                // Limpiar formulario
-                sellerName.value = '';
-                sellerPhone.value = '';
-                
-                // Actualizar lista y selectores
-                loadSellersList();
-                loadSellers();
-                saveToLocalStorage();
-                
-                showNotification('Vendedor guardado correctamente', 'success');
-            }
-            
-            function editSeller(sellerId) {
-                const seller = sellers.find(s => s.id == sellerId);
-                if (seller) {
-                    sellerName.value = seller.name;
-                    sellerPhone.value = seller.phone;
-                    currentEditingSeller = sellerId;
-                    addSellerBtn.innerHTML = '<i class="fas fa-save"></i> Actualizar Vendedor';
-                }
-            }
-            
-            function deleteSeller(sellerId) {
-                if (confirm('¿Estás seguro de que quieres eliminar este vendedor?')) {
-                    // Verificar si el vendedor está asignado a algún cliente
-                    const assignedClients = clients.filter(client => client.seller == sellerId);
-                    
-                    if (assignedClients.length > 0) {
-                        alert('No se puede eliminar este vendedor porque está asignado a ' + assignedClients.length + ' cliente(s). Reasigna los clientes primero.');
-                        return;
-                    }
-                    
-                    sellers = sellers.filter(seller => seller.id != sellerId);
-                    loadSellersList();
-                    loadSellers();
-                    saveToLocalStorage();
-                    
-                    showNotification('Vendedor eliminado correctamente', 'success');
-                }
-            }
-            
-            function loadServicesList() {
-                servicesList.innerHTML = '';
-                
-                services.forEach(service => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `
-                        <div>
-                            <strong>${service.name}</strong>
-                        </div>
-                        <div class="management-actions">
-                            <button class="secondary edit-service" data-id="${service.id}"><i class="fas fa-edit"></i></button>
-                            <button class="accent delete-service" data-id="${service.id}"><i class="fas fa-trash"></i></button>
-                        </div>
-                    `;
-                    servicesList.appendChild(li);
-                });
-                
-                // Agregar event listeners a los botones
-                document.querySelectorAll('.edit-service').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const serviceId = this.getAttribute('data-id');
-                        editService(serviceId);
-                    });
-                });
-                
-                document.querySelectorAll('.delete-service').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const serviceId = this.getAttribute('data-id');
-                        deleteService(serviceId);
-                    });
-                });
-            }
-            
-            function addOrUpdateService() {
-                const name = serviceName.value.trim();
-                
-                if (!name) {
-                    alert('Por favor, ingresa el nombre del servicio');
-                    return;
-                }
-                
-                if (currentEditingService) {
-                    // Editar servicio existente
-                    const service = services.find(s => s.id == currentEditingService);
-                    if (service) {
-                        service.name = name;
-                    }
-                    currentEditingService = null;
-                    addServiceBtn.innerHTML = '<i class="fas fa-plus"></i> Agregar Servicio';
-                } else {
-                    // Agregar nuevo servicio
-                    const newId = services.length > 0 ? Math.max(...sellers.map(s => parseInt(s.id))) + 1 : 1;
-                    services.push({
-                        id: newId.toString(),
-                        name: name
-                    });
-                }
-                
-                // Limpiar formulario
-                serviceName.value = '';
-                
-                // Actualizar lista y selectores
-                loadServicesList();
-                updateServiceOptions();
-                updatePlanServiceTypeOptions();
-                saveToLocalStorage();
-                
-                showNotification('Servicio guardado correctamente', 'success');
-            }
-            
-            function editService(serviceId) {
-                const service = services.find(s => s.id == serviceId);
-                if (service) {
-                    serviceName.value = service.name;
-                    currentEditingService = serviceId;
-                    addServiceBtn.innerHTML = '<i class="fas fa-save"></i> Actualizar Servicio';
-                }
-            }
-            
-            function deleteService(serviceId) {
-                if (confirm('¿Estás seguro de que quieres eliminar este servicio?')) {
-                    // Verificar si el servicio está asignado a algún cliente o plan
-                    const assignedClients = clients.filter(client => client.serviceType == serviceId);
-                    const assignedPlans = plans.filter(plan => plan.serviceType == serviceId);
-                    
-                    if (assignedClients.length > 0 || assignedPlans.length > 0) {
-                        alert('No se puede eliminar este servicio porque está asignado a ' + assignedClients.length + ' cliente(s) y ' + assignedPlans.length + ' plan(es). Reasigna primero.');
-                        return;
-                    }
-                    
-                    services = services.filter(service => service.id != serviceId);
-                    loadServicesList();
-                    updateServiceOptions();
-                    updatePlanServiceTypeOptions();
-                    saveToLocalStorage();
-                    
-                    showNotification('Servicio eliminado correctamente', 'success');
-                }
-            }
-            
-            function loadPlansList() {
-                plansList.innerHTML = '';
-                
-                plans.forEach(plan => {
-                    const service = services.find(s => s.id == plan.serviceType);
-                    const serviceName = service ? service.name : 'N/A';
-                    
-                    const li = document.createElement('li');
-                    li.innerHTML = `
-                        <div>
-                            <strong>${plan.name} (${plan.speed} Mbps)</strong>
-                            <br>
-                            <span>Servicio: ${serviceName}</span>
-                            <br>
-                            <span>P. Pronto Pago: $${plan.fastPrice} | P. Lista: $${plan.listPrice} | Comisión: $${plan.commission}</span>
-                        </div>
-                        <div class="management-actions">
-                            <button class="secondary edit-plan" data-id="${plan.id}"><i class="fas fa-edit"></i></button>
-                            <button class="accent delete-plan" data-id="${plan.id}"><i class="fas fa-trash"></i></button>
-                        </div>
-                    `;
-                    plansList.appendChild(li);
-                });
-                
-                // Agregar event listeners a los botones
-                document.querySelectorAll('.edit-plan').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const planId = this.getAttribute('data-id');
-                        editPlan(planId);
-                    });
-                });
-                
-                document.querySelectorAll('.delete-plan').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const planId = this.getAttribute('data-id');
-                        deletePlan(planId);
-                    });
-                });
-            }
-            
-            function addOrUpdatePlan() {
-                const name = planName.value.trim();
-                const speed = parseInt(planSpeed.value);
-                const serviceType = planServiceType.value;
-                const fastPrice = parseFloat(planFastPrice.value);
-                const listPrice = parseFloat(planListPrice.value);
-                const commission = parseFloat(planCommission.value);
-                
-                if (!name || !speed || !serviceType || !fastPrice || !listPrice || !commission) {
-                    alert('Por favor, completa todos los campos del plan');
-                    return;
-                }
-                
-                if (currentEditingPlan) {
-                    // Editar plan existente
-                    const plan = plans.find(p => p.id == currentEditingPlan);
-                    if (plan) {
-                        plan.name = name;
-                        plan.speed = speed;
-                        plan.serviceType = serviceType;
-                        plan.fastPrice = fastPrice;
-                        plan.listPrice = listPrice;
-                        plan.commission = commission;
-                    }
-                    currentEditingPlan = null;
-                    addPlanBtn.innerHTML = '<i class="fas fa-plus"></i> Agregar Plan';
-                } else {
-                    // Agregar nuevo plan
-                    const newId = plans.length > 0 ? Math.max(...plans.map(p => parseInt(p.id))) + 1 : 1;
-                    plans.push({
-                        id: newId.toString(),
-                        name: name,
-                        speed: speed,
-                        serviceType: serviceType,
-                        fastPrice: fastPrice,
-                        listPrice: listPrice,
-                        commission: commission
-                    });
-                }
-                
-                // Limpiar formulario
-                planName.value = '';
-                planSpeed.value = '';
-                planServiceType.value = '';
-                planFastPrice.value = '';
-                planListPrice.value = '';
-                planCommission.value = '';
-                
-                // Actualizar lista y selectores
-                loadPlansList();
-                updatePricingTable();
-                loadPlans();
-                saveToLocalStorage();
-                
-                showNotification('Plan guardado correctamente', 'success');
-            }
-            
-            function editPlan(planId) {
-                const plan = plans.find(p => p.id == planId);
-                if (plan) {
-                    planName.value = plan.name;
-                    planSpeed.value = plan.speed;
-                    planServiceType.value = plan.serviceType;
-                    planFastPrice.value = plan.fastPrice;
-                    planListPrice.value = plan.listPrice;
-                    planCommission.value = plan.commission;
-                    currentEditingPlan = planId;
-                    addPlanBtn.innerHTML = '<i class="fas fa-save"></i> Actualizar Plan';
-                }
-            }
-            
-            function deletePlan(planId) {
-                if (confirm('¿Estás seguro de que quieres eliminar este plan?')) {
-                    // Verificar si el plan está asignado a algún cliente
-                    const assignedClients = clients.filter(client => client.plan == planId);
-                    
-                    if (assignedClients.length > 0) {
-                        alert('No se puede eliminar este plan porque está asignado a ' + assignedClients.length + ' cliente(s). Reasigna primero.');
-                        return;
-                    }
-                    
-                    plans = plans.filter(plan => plan.id != planId);
-                    loadPlansList();
-                    updatePricingTable();
-                    loadPlans();
-                    saveToLocalStorage();
-                    
-                    showNotification('Plan eliminado correctamente', 'success');
-                }
-            }
-            
-            function loadMakeConfig() {
-                makeWebhookUrl.value = makeWebhook;
-                currentWebhookUrl.textContent = makeWebhook;
-                makeStatusText.textContent = 'Conectado';
-                makeStatusText.style.color = 'green';
-            }
-            
-            function saveMakeConfig() {
-                const webhookUrl = makeWebhookUrl.value.trim();
-                
-                if (!webhookUrl) {
-                    alert('Por favor, ingresa la URL del webhook de Make.com');
-                    return;
-                }
-                
-                makeWebhook = webhookUrl;
-                
-                saveToLocalStorage();
-                loadMakeConfig();
-                
-                showNotification('Configuración de Make.com actualizada correctamente', 'success');
-            }
-            
-            function testMakeConnection() {
-                showNotification('Probando conexión con Make.com...', 'success');
-                
-                // Enviar una solicitud de prueba
-                fetch(makeWebhook, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        action: 'test',
-                        message: 'Conexión de prueba desde CRM',
-                        timestamp: new Date().toISOString()
-                    })
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Error en la respuesta del servidor');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    showNotification('Conexión exitosa con Make.com', 'success');
-                })
-                .catch(error => {
-                    console.error('Error probando conexión con Make.com:', error);
-                    showNotification('Error al conectar con Make.com. Verifica la URL del webhook.', 'error');
-                });
-            }
-            
-            function importFromSheets() {
-                showNotification('Solicitando datos desde Google Sheets...', 'success');
-                
-                // Enviar solicitud de importación
-                fetch(makeWebhook, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        action: 'import_data',
-                        timestamp: new Date().toISOString()
-                    })
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Error en la respuesta del servidor');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.clients && Array.isArray(data.clients)) {
-                        clients = data.clients;
-                        updateClientsTable();
-                        updateSummaryCards();
-                        saveToLocalStorage();
-                        showNotification('Datos importados correctamente desde Google Sheets', 'success');
-                    } else {
-                        showNotification('No se recibieron datos válidos desde Google Sheets', 'error');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error importando desde Google Sheets:', error);
-                    showNotification('Error al importar desde Google Sheets. Verifica la configuración en Make.com.', 'error');
-                });
-            }
-            
-            function showNotification(message, type) {
-                notification.textContent = message;
-                notification.className = 'notification ' + type;
-                notification.style.display = 'block';
-                
-                setTimeout(() => {
-                    notification.style.display = 'none';
-                }, 3000);
+            } else {
+                showNotification('❌ Credenciales incorrectas', 'error');
             }
         });
+
+        function checkAdminLogin() {
+            return localStorage.getItem('admin_logged_in') === 'true';
+        }
+
+        function logoutAdmin() {
+            localStorage.removeItem('admin_logged_in');
+            localStorage.removeItem('current_admin');
+            showSection('login');
+            showNotification('👋 Sesión cerrada exitosamente');
+        }
+
+        // =============================================
+        // PANEL DE ADMINISTRACIÓN
+        // =============================================
+        function loadAdminPanel() {
+            const total = propiedades.length;
+            const disponibles = propiedades.filter(p => !p.vendida).length;
+            const vendidas = propiedades.filter(p => p.vendida).length;
+            const admins = usuarios.filter(u => u.es_admin).length;
+            
+            document.getElementById('admin-total').textContent = total;
+            document.getElementById('admin-available').textContent = disponibles;
+            document.getElementById('admin-sold').textContent = vendidas;
+            document.getElementById('admin-users').textContent = usuarios.length;
+            
+            // Cargar usuarios
+            loadUsersList();
+            
+            // Cargar tabla de propiedades
+            const table = document.getElementById('admin-properties-table');
+            table.innerHTML = propiedades.map(prop => `
+                <tr>
+                    <td>#${prop.id}</td>
+                    <td>
+                        <img src="${prop.imagen_url}" style="width: 60px; height: 40px; object-fit: cover; border-radius: 4px;" alt="Imagen">
+                    </td>
+                    <td>${prop.municipio}</td>
+                    <td>${prop.colonia.replace(/<br>/g, ' ')}</td>
+                    <td>$${prop.costo_propiedad.toLocaleString('es-MX')}</td>
+                    <td>
+                        <span class="status-badge" style="background: ${prop.vendida ? '#fdeaea' : '#d5f4e6'}; color: ${prop.vendida ? '#e74c3c' : '#27ae60'}">
+                            ${prop.vendida ? 'Vendida' : 'Disponible'}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="table-actions">
+                            <button class="table-btn btn-edit" onclick="editProperty(${prop.id})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="table-btn btn-delete" onclick="confirmDeleteProperty(${prop.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button class="table-btn btn-toggle" onclick="togglePropertyStatus(${prop.id})">
+                                <i class="fas fa-${prop.vendida ? 'undo' : 'check'}"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function loadUsersList() {
+            const container = document.getElementById('users-list');
+            container.innerHTML = usuarios.map(user => `
+                <div class="user-card">
+                    <div class="user-info">
+                        <div class="user-details">
+                            <h4>${user.nombre}</h4>
+                            <p>${user.email}</p>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <span class="user-role ${user.es_admin ? 'role-admin' : 'role-user'}">
+                                ${user.es_admin ? 'Administrador' : 'Usuario'}
+                            </span>
+                            ${user.email !== 'admin@jkea.com' ? `
+                            <button class="table-btn btn-delete" onclick="confirmDeleteUser(${user.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // =============================================
+        // GESTIÓN DE PROPIEDADES
+        // =============================================
+        function showAddPropertyModal() {
+            document.getElementById('propertyForm').reset();
+            document.getElementById('modal-vendida').checked = false;
+            document.getElementById('image-preview').style.display = 'none';
+            currentPropertyId = null;
+            document.getElementById('modal-title').innerHTML = '<i class="fas fa-plus-circle"></i> Nueva Propiedad';
+            document.getElementById('propertyModal').classList.add('active');
+        }
+
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('image-preview');
+            
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function editProperty(id) {
+            const propiedad = propiedades.find(p => p.id === id);
+            if (!propiedad) return;
+            
+            document.getElementById('modal-municipio').value = propiedad.municipio;
+            document.getElementById('modal-colonia').value = propiedad.colonia.replace(/<br>/g, ' ');
+            document.getElementById('modal-descripcion').value = propiedad.descripcion;
+            document.getElementById('modal-precio').value = propiedad.costo_propiedad;
+            document.getElementById('modal-avaluo').value = propiedad.costo_avaluo;
+            document.getElementById('modal-carta').value = propiedad.costo_carta_no_propiedad;
+            document.getElementById('modal-maps').value = propiedad.google_maps_link;
+            document.getElementById('modal-vendida').checked = propiedad.vendida;
+            
+            // Para imágenes ya subidas, mostrar preview
+            const preview = document.getElementById('image-preview');
+            if (propiedad.imagen_url.startsWith('data:')) {
+                preview.src = propiedad.imagen_url;
+                preview.style.display = 'block';
+            } else {
+                preview.style.display = 'none';
+            }
+            
+            currentPropertyId = id;
+            document.getElementById('modal-title').innerHTML = '<i class="fas fa-edit"></i> Editar Propiedad';
+            document.getElementById('propertyModal').classList.add('active');
+        }
+
+        document.getElementById('propertyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Obtener imagen (data URL o URL existente)
+            let imagenUrl = '';
+            const fileInput = document.getElementById('property-image-input');
+            const preview = document.getElementById('image-preview');
+            
+            if (fileInput.files[0]) {
+                // Convertir imagen a data URL
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagenUrl = e.target.result;
+                    saveProperty(imagenUrl);
+                }
+                reader.readAsDataURL(fileInput.files[0]);
+            } else if (preview.style.display !== 'none' && preview.src) {
+                // Usar imagen existente del preview
+                imagenUrl = preview.src;
+                saveProperty(imagenUrl);
+            } else if (currentPropertyId) {
+                // Mantener imagen existente al editar
+                const propiedadExistente = propiedades.find(p => p.id === currentPropertyId);
+                imagenUrl = propiedadExistente.imagen_url;
+                saveProperty(imagenUrl);
+            } else {
+                showNotification('❌ Debes subir una imagen', 'error');
+                return;
+            }
+        });
+
+        function saveProperty(imagenUrl) {
+            const propiedad = {
+                id: currentPropertyId || propiedades.length > 0 ? Math.max(...propiedades.map(p => p.id)) + 1 : 1,
+                municipio: document.getElementById('modal-municipio').value,
+                colonia: document.getElementById('modal-colonia').value,
+                descripcion: document.getElementById('modal-descripcion').value,
+                costo_propiedad: parseFloat(document.getElementById('modal-precio').value),
+                costo_avaluo: parseFloat(document.getElementById('modal-avaluo').value),
+                costo_carta_no_propiedad: parseFloat(document.getElementById('modal-carta').value),
+                google_maps_link: document.getElementById('modal-maps').value,
+                imagen_url: imagenUrl,
+                vendida: document.getElementById('modal-vendida').checked,
+                fecha_creacion: currentPropertyId ? 
+                    propiedades.find(p => p.id === currentPropertyId)?.fecha_creacion || new Date().toISOString().split('T')[0] :
+                    new Date().toISOString().split('T')[0]
+            };
+            
+            if (currentPropertyId) {
+                // Editar propiedad existente
+                const index = propiedades.findIndex(p => p.id === currentPropertyId);
+                if (index !== -1) {
+                    propiedades[index] = propiedad;
+                    showNotification('✅ Propiedad actualizada exitosamente');
+                }
+            } else {
+                // Agregar nueva propiedad
+                propiedades.push(propiedad);
+                showNotification('✅ Propiedad agregada exitosamente');
+            }
+            
+            // Guardar en localStorage
+            localStorage.setItem('jkea_propiedades', JSON.stringify(propiedades));
+            
+            // Actualizar todas las vistas
+            loadHomeProperties();
+            loadSoldProperties();
+            updateSoldStats();
+            loadAdminPanel();
+            
+            // Cerrar modal
+            closeModal();
+        }
+
+        function togglePropertyStatus(id) {
+            const propiedad = propiedades.find(p => p.id === id);
+            if (propiedad) {
+                propiedad.vendida = !propiedad.vendida;
+                if (propiedad.vendida) {
+                    propiedad.fecha_venta = new Date().toISOString().split('T')[0];
+                }
+                localStorage.setItem('jkea_propiedades', JSON.stringify(propiedades));
+                
+                // Actualizar todas las vistas
+                loadHomeProperties();
+                loadSoldProperties();
+                updateSoldStats();
+                loadAdminPanel();
+                
+                showNotification(`✅ Propiedad marcada como ${propiedad.vendida ? 'vendida' : 'disponible'}`);
+            }
+        }
+
+        // =============================================
+        // GESTIÓN DE USUARIOS
+        // =============================================
+        function showAddUserModal() {
+            const adminCount = usuarios.filter(u => u.es_admin).length;
+            if (adminCount >= 3) {
+                showNotification('❌ Máximo 3 administradores permitidos', 'error');
+                return;
+            }
+            
+            document.getElementById('userForm').reset();
+            document.getElementById('user-admin').checked = false;
+            document.getElementById('userModal').classList.add('active');
+        }
+
+        document.getElementById('userForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nombre = document.getElementById('user-name').value;
+            const email = document.getElementById('user-email').value;
+            const password = document.getElementById('user-password').value;
+            const confirmPassword = document.getElementById('user-confirm').value;
+            const esAdmin = document.getElementById('user-admin').checked;
+            
+            // Validaciones
+            if (password !== confirmPassword) {
+                showNotification('❌ Las contraseñas no coinciden', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showNotification('❌ La contraseña debe tener al menos 6 caracteres', 'error');
+                return;
+            }
+            
+            // Verificar si el email ya existe
+            if (usuarios.some(u => u.email === email)) {
+                showNotification('❌ Este email ya está registrado', 'error');
+                return;
+            }
+            
+            // Verificar límite de administradores
+            if (esAdmin) {
+                const adminCount = usuarios.filter(u => u.es_admin).length;
+                if (adminCount >= 3) {
+                    showNotification('❌ Máximo 3 administradores permitidos', 'error');
+                    return;
+                }
+            }
+            
+            const nuevoUsuario = {
+                id: usuarios.length > 0 ? Math.max(...usuarios.map(u => u.id)) + 1 : 1,
+                nombre: nombre,
+                email: email,
+                password: password,
+                es_admin: esAdmin,
+                activo: true
+            };
+            
+            usuarios.push(nuevoUsuario);
+            localStorage.setItem('jkea_usuarios', JSON.stringify(usuarios));
+            
+            loadAdminPanel();
+            showNotification('✅ Usuario creado exitosamente');
+            closeUserModal();
+        });
+
+        // =============================================
+        // FUNCIONES DE ELIMINACIÓN
+        // =============================================
+        function confirmDeleteProperty(id) {
+            const propiedad = propiedades.find(p => p.id === id);
+            if (!propiedad) return;
+            
+            deletePropertyId = id;
+            document.getElementById('confirm-message').textContent = 
+                `¿Estás seguro de eliminar la propiedad #${id} - ${propiedad.municipio}, ${propiedad.colonia.replace(/<br>/g, ' ')}?`;
+            document.getElementById('confirm-action-btn').onclick = deleteProperty;
+            document.getElementById('confirmModal').classList.add('active');
+        }
+
+        function deleteProperty() {
+            propiedades = propiedades.filter(p => p.id !== deletePropertyId);
+            localStorage.setItem('jkea_propiedades', JSON.stringify(propiedades));
+            
+            // Actualizar todas las vistas
+            loadHomeProperties();
+            loadSoldProperties();
+            updateSoldStats();
+            loadAdminPanel();
+            
+            showNotification('✅ Propiedad eliminada exitosamente');
+            closeConfirmModal();
+        }
+
+        function confirmDeleteUser(id) {
+            const usuario = usuarios.find(u => u.id === id);
+            if (!usuario) return;
+            
+            deleteUserId = id;
+            document.getElementById('confirm-message').textContent = 
+                `¿Estás seguro de eliminar al usuario ${usuario.nombre} (${usuario.email})?`;
+            document.getElementById('confirm-action-btn').onclick = deleteUser;
+            document.getElementById('confirmModal').classList.add('active');
+        }
+
+        function deleteUser() {
+            usuarios = usuarios.filter(u => u.id !== deleteUserId);
+            localStorage.setItem('jkea_usuarios', JSON.stringify(usuarios));
+            
+            loadAdminPanel();
+            showNotification('✅ Usuario eliminado exitosamente');
+            closeConfirmModal();
+        }
+
+        // =============================================
+        // FUNCIONES AUXILIARES
+        // =============================================
+        function closeModal() {
+            document.getElementById('propertyModal').classList.remove('active');
+        }
+
+        function closeUserModal() {
+            document.getElementById('userModal').classList.remove('active');
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.remove('active');
+        }
+
+        function showNotification(message, type = 'success') {
+            // Remover notificaciones anteriores
+            document.querySelectorAll('.notification').forEach(notif => notif.remove());
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <i class="fas ${type === 'error' ? 'fa-exclamation-circle' : type === 'info' ? 'fa-info-circle' : 'fa-check-circle'}"></i>
+                ${message}
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remover después de 3 segundos
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 3000);
+        }
+
+        // =============================================
+        // INICIALIZACIÓN
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cargar datos iniciales
+            loadHomeProperties();
+            
+            // Auto-completar credenciales para pruebas
+            document.getElementById('login-email').value = 'admin@jkea.com';
+            document.getElementById('login-password').value = 'Admin123';
+            
+            // Configurar eventos para cerrar modales
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('active');
+                    }
+                });
+            });
+            
+            // Cerrar menú al hacer clic fuera (en móviles)
+            document.addEventListener('click', function(e) {
+                const navMenu = document.getElementById('navMenu');
+                const hamburger = document.querySelector('.hamburger');
+                
+                if (window.innerWidth <= 768 && 
+                    navMenu.classList.contains('active') && 
+                    !navMenu.contains(e.target) && 
+                    !hamburger.contains(e.target)) {
+                    navMenu.classList.remove('active');
+                    // Restaurar hamburguesa
+                    const spans = document.querySelectorAll('.hamburger span');
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
+                }
+            });
+            
+            // Ajustar navegación en resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    const navMenu = document.getElementById('navMenu');
+                    navMenu.classList.remove('active');
+                    // Restaurar hamburguesa
+                    const spans = document.querySelectorAll('.hamburger span');
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
+                }
+            });
+        });
+
+        // Agregar FontAwesome dinámicamente
+        const faLink = document.createElement('link');
+        faLink.rel = 'stylesheet';
+        faLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+        document.head.appendChild(faLink);
     </script>
 </body>
 </html>
