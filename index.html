@@ -30,7 +30,7 @@
             color: var(--text-color);
             line-height: 1.6;
             min-height: 100vh;
-            padding-top: 70px; /* Para el header fijo */
+            padding-top: 70px;
         }
 
         .container {
@@ -851,7 +851,7 @@
         /* RESPONSIVE - MÓVIL */
         @media (max-width: 768px) {
             body {
-                padding-top: 120px; /* Más espacio para header más grande en móvil */
+                padding-top: 120px;
             }
 
             .hamburger {
@@ -1281,9 +1281,10 @@
                             <i class="fas fa-cloud-upload-alt"></i>
                             <p>Haz clic para subir una imagen</p>
                             <p style="font-size: 0.9rem; color: #666;">Formatos: JPG, PNG, WEBP</p>
-                            <input type="file" id="property-image-input" accept="image/*" onchange="previewImage(event)" style="display: none;" required>
+                            <input type="file" id="property-image-input" accept="image/*" onchange="previewImage(event)" style="display: none;">
                         </div>
                         <img id="image-preview" alt="Vista previa">
+                        <input type="hidden" id="modal-imagen-url">
                     </div>
 
                     <div class="form-group">
@@ -1382,7 +1383,7 @@
         </div>
     </div>
 
-    <!-- SCRIPT PRINCIPAL -->
+    <!-- SCRIPT PRINCIPAL CORREGIDO -->
     <script>
         // =============================================
         // DATOS INICIALES
@@ -1444,6 +1445,7 @@
         let currentPropertyId = null;
         let deletePropertyId = null;
         let deleteUserId = null;
+        let currentImageUrl = ''; // Para manejar la imagen actual
 
         // =============================================
         // FUNCIONES DE NAVEGACIÓN
@@ -1843,13 +1845,15 @@ COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleSt
         }
 
         // =============================================
-        // GESTIÓN DE PROPIEDADES
+        // GESTIÓN DE PROPIEDADES - CORREGIDO
         // =============================================
         function showAddPropertyModal() {
             document.getElementById('propertyForm').reset();
             document.getElementById('modal-vendida').checked = false;
             document.getElementById('image-preview').style.display = 'none';
+            document.getElementById('modal-imagen-url').value = '';
             currentPropertyId = null;
+            currentImageUrl = '';
             document.getElementById('modal-title').innerHTML = '<i class="fas fa-plus-circle"></i> Nueva Propiedad';
             document.getElementById('propertyModal').classList.add('active');
         }
@@ -1863,6 +1867,7 @@ COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleSt
                 reader.onload = function(e) {
                     preview.src = e.target.result;
                     preview.style.display = 'block';
+                    currentImageUrl = e.target.result; // Guardar la data URL
                 }
                 reader.readAsDataURL(file);
             }
@@ -1881,52 +1886,34 @@ COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleSt
             document.getElementById('modal-maps').value = propiedad.google_maps_link;
             document.getElementById('modal-vendida').checked = propiedad.vendida;
             
-            // Para imágenes ya subidas, mostrar preview
+            // Guardar la imagen actual
+            currentImageUrl = propiedad.imagen_url;
+            
+            // Mostrar preview de imagen existente
             const preview = document.getElementById('image-preview');
-            if (propiedad.imagen_url.startsWith('data:')) {
-                preview.src = propiedad.imagen_url;
-                preview.style.display = 'block';
-            } else {
-                preview.style.display = 'none';
-            }
+            preview.src = propiedad.imagen_url;
+            preview.style.display = 'block';
             
             currentPropertyId = id;
             document.getElementById('modal-title').innerHTML = '<i class="fas fa-edit"></i> Editar Propiedad';
             document.getElementById('propertyModal').classList.add('active');
         }
 
+        // Formulario de propiedades - CORREGIDO
         document.getElementById('propertyForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Obtener imagen (data URL o URL existente)
-            let imagenUrl = '';
-            const fileInput = document.getElementById('property-image-input');
+            // Validar que haya una imagen
             const preview = document.getElementById('image-preview');
-            
-            if (fileInput.files[0]) {
-                // Convertir imagen a data URL
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    imagenUrl = e.target.result;
-                    saveProperty(imagenUrl);
-                }
-                reader.readAsDataURL(fileInput.files[0]);
-            } else if (preview.style.display !== 'none' && preview.src) {
-                // Usar imagen existente del preview
-                imagenUrl = preview.src;
-                saveProperty(imagenUrl);
-            } else if (currentPropertyId) {
-                // Mantener imagen existente al editar
-                const propiedadExistente = propiedades.find(p => p.id === currentPropertyId);
-                imagenUrl = propiedadExistente.imagen_url;
-                saveProperty(imagenUrl);
-            } else {
+            if (!currentImageUrl && preview.style.display === 'none') {
                 showNotification('❌ Debes subir una imagen', 'error');
                 return;
             }
-        });
-
-        function saveProperty(imagenUrl) {
+            
+            // Usar la imagen actual (ya sea nueva o existente)
+            const imagenUrl = currentImageUrl;
+            
+            // Crear objeto de propiedad
             const propiedad = {
                 id: currentPropertyId || propiedades.length > 0 ? Math.max(...propiedades.map(p => p.id)) + 1 : 1,
                 municipio: document.getElementById('modal-municipio').value,
@@ -1960,13 +1947,17 @@ COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleSt
             localStorage.setItem('jkea_propiedades', JSON.stringify(propiedades));
             
             // Actualizar todas las vistas
+            updateAllViews();
+            
+            // Cerrar modal
+            closeModal();
+        });
+
+        function updateAllViews() {
             loadHomeProperties();
             loadSoldProperties();
             updateSoldStats();
             loadAdminPanel();
-            
-            // Cerrar modal
-            closeModal();
         }
 
         function togglePropertyStatus(id) {
@@ -1978,12 +1969,7 @@ COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleSt
                 }
                 localStorage.setItem('jkea_propiedades', JSON.stringify(propiedades));
                 
-                // Actualizar todas las vistas
-                loadHomeProperties();
-                loadSoldProperties();
-                updateSoldStats();
-                loadAdminPanel();
-                
+                updateAllViews();
                 showNotification(`✅ Propiedad marcada como ${propiedad.vendida ? 'vendida' : 'disponible'}`);
             }
         }
@@ -2073,12 +2059,7 @@ COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleSt
             propiedades = propiedades.filter(p => p.id !== deletePropertyId);
             localStorage.setItem('jkea_propiedades', JSON.stringify(propiedades));
             
-            // Actualizar todas las vistas
-            loadHomeProperties();
-            loadSoldProperties();
-            updateSoldStats();
-            loadAdminPanel();
-            
+            updateAllViews();
             showNotification('✅ Propiedad eliminada exitosamente');
             closeConfirmModal();
         }
@@ -2108,14 +2089,21 @@ COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleSt
         // =============================================
         function closeModal() {
             document.getElementById('propertyModal').classList.remove('active');
+            document.getElementById('propertyForm').reset();
+            document.getElementById('image-preview').style.display = 'none';
+            currentImageUrl = '';
+            currentPropertyId = null;
         }
 
         function closeUserModal() {
             document.getElementById('userModal').classList.remove('active');
+            document.getElementById('userForm').reset();
         }
 
         function closeConfirmModal() {
             document.getElementById('confirmModal').classList.remove('active');
+            deletePropertyId = null;
+            deleteUserId = null;
         }
 
         function showNotification(message, type = 'success') {
@@ -2155,6 +2143,13 @@ COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleSt
                 modal.addEventListener('click', function(e) {
                     if (e.target === this) {
                         this.classList.remove('active');
+                        if (this.id === 'propertyModal') {
+                            closeModal();
+                        } else if (this.id === 'userModal') {
+                            closeUserModal();
+                        } else if (this.id === 'confirmModal') {
+                            closeConfirmModal();
+                        }
                     }
                 });
             });
@@ -2189,6 +2184,10 @@ COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleSt
                     spans[2].style.transform = 'none';
                 }
             });
+            
+            // Log para debug
+            console.log('Propiedades cargadas:', propiedades.length);
+            console.log('Usuarios cargados:', usuarios.length);
         });
 
         // Agregar FontAwesome dinámicamente
