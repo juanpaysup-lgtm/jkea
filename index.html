@@ -1313,8 +1313,157 @@
         </div>
     </section>
 
-    <!-- MODALES (se mantienen igual) -->
-    <!-- ... (todos los modales anteriores permanecen igual) ... -->
+    <!-- MODAL PARA AGREGAR/EDITAR PROPIEDAD -->
+    <div id="propertyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title"><i class="fas fa-plus-circle"></i> Nueva Propiedad</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="propertyForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-city"></i> Municipio *</label>
+                            <input type="text" class="form-control" id="modal-municipio" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-map-marker-alt"></i> Colonia *</label>
+                            <input type="text" class="form-control" id="modal-colonia" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-file-alt"></i> Descripción *</label>
+                        <textarea class="form-control" id="modal-descripcion" rows="4" required></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-dollar-sign"></i> Precio Propiedad *</label>
+                            <input type="number" class="form-control" id="modal-precio" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-file-invoice-dollar"></i> Costo Avalúo *</label>
+                            <input type="number" class="form-control" id="modal-avaluo" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-file-contract"></i> Carta No Propiedad *</label>
+                            <input type="number" class="form-control" id="modal-carta" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-map-marked-alt"></i> Enlace Google Maps *</label>
+                        <input type="url" class="form-control" id="modal-maps" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-image"></i> Imagen de la Propiedad *</label>
+                        <div class="file-upload" onclick="document.getElementById('property-image-input').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Haz clic para subir una imagen</p>
+                            <p style="font-size: 0.9rem; color: #666;">Formatos: JPG, PNG, WEBP</p>
+                            <input type="file" id="property-image-input" accept="image/*" onchange="previewImage(event)" style="display: none;">
+                        </div>
+                        <img id="image-preview" alt="Vista previa">
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-tag"></i> Estado</label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="modal-vendida">
+                            <label for="modal-vendida">Marcar como vendida</label>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal()">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            Guardar Propiedad
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PARA AGREGAR USUARIO -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-plus"></i> Nuevo Usuario</h3>
+                <button class="close-btn" onclick="closeUserModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="userForm">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Nombre Completo *</label>
+                        <input type="text" class="form-control" id="user-name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Email *</label>
+                        <input type="email" class="form-control" id="user-email" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-lock"></i> Contraseña *</label>
+                            <input type="password" class="form-control" id="user-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-lock"></i> Confirmar Contraseña *</label>
+                            <input type="password" class="form-control" id="user-confirm" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-user-tag"></i> Tipo de Usuario</label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="user-admin">
+                            <label for="user-admin">Es Administrador</label>
+                        </div>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">
+                            Máximo 3 administradores permitidos
+                        </p>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeUserModal()">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            Crear Usuario
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE CONFIRMACIÓN -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-exclamation-triangle"></i> Confirmar</h3>
+                <button class="close-btn" onclick="closeConfirmModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="confirm-message" style="text-align: center; margin-bottom: 30px; font-size: 1.1rem;"></p>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeConfirmModal()">
+                        Cancelar
+                    </button>
+                    <button type="button" class="btn btn-danger" id="confirm-action-btn">
+                        Confirmar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- INDICADOR DE CONEXIÓN -->
     <div id="connectionStatus" class="connection-badge connection-online" style="display: none;">
@@ -1359,22 +1508,30 @@
         let currentImageUrl = '';
 
         // =============================================
-        // INICIALIZACIÓN DE FIREBASE
+        // INICIALIZACIÓN DE FIREBASE - CORREGIDA
         // =============================================
         function inicializarFirebase() {
             try {
-                firebaseApp = firebase.initializeApp(firebaseConfig);
+                // Verificar si Firebase ya está inicializado
+                if (!firebase.apps.length) {
+                    firebaseApp = firebase.initializeApp(firebaseConfig);
+                } else {
+                    firebaseApp = firebase.app();
+                }
+                
                 db = firebase.firestore();
                 auth = firebase.auth();
                 
-                console.log("✅ Firebase inicializado");
-                actualizarEstadoConexion('online');
+                console.log("✅ Firebase inicializado correctamente");
+                console.log("Proyecto:", firebaseConfig.projectId);
                 
+                actualizarEstadoConexion('online');
                 configurarAutenticacion();
                 iniciarSincronizacionTiempoReal();
                 
             } catch (error) {
-                console.error("❌ Error inicializando Firebase:", error);
+                console.error("❌ Error crítico inicializando Firebase:", error);
+                console.error("Detalles del error:", error.message);
                 actualizarEstadoConexion('offline');
                 cargarDatosLocales();
             }
@@ -1382,38 +1539,46 @@
 
         async function configurarAutenticacion() {
             try {
+                // Primero intentar autenticación anónima para lecturas
+                await auth.signInAnonymously();
+                console.log("✅ Autenticación anónima configurada");
+                
+                // Si el admin ya está logueado, intentar autenticación con email/password
                 if (localStorage.getItem('admin_logged_in') === 'true') {
                     const email = localStorage.getItem('current_admin');
-                    const password = obtenerPasswordAdmin(email);
-                    if (password) {
-                        await auth.signInWithEmailAndPassword(email, password);
-                    } else {
-                        await auth.signInAnonymously();
+                    const usuario = usuarios.find(u => u.email === email);
+                    
+                    if (usuario && usuario.password) {
+                        try {
+                            await auth.signInWithEmailAndPassword(email, usuario.password);
+                            console.log("✅ Admin autenticado en Firebase");
+                        } catch (authError) {
+                            console.warn("⚠️ No se pudo autenticar admin, manteniendo anónimo");
+                        }
                     }
-                } else {
-                    await auth.signInAnonymously();
                 }
-                console.log("✅ Autenticación configurada");
             } catch (error) {
-                console.warn("⚠️ Usando autenticación anónima");
-                await auth.signInAnonymously();
+                console.warn("⚠️ Error en autenticación:", error.message);
+                // Continuar incluso si hay error de autenticación
             }
         }
 
-        function obtenerPasswordAdmin(email) {
-            const usuario = usuarios.find(u => u.email === email);
-            return usuario ? usuario.password : null;
-        }
-
         // =============================================
-        // SINCRONIZACIÓN EN TIEMPO REAL
+        // SINCRONIZACIÓN EN TIEMPO REAL - CORREGIDA
         // =============================================
         function iniciarSincronizacionTiempoReal() {
-            if (!db) return;
+            if (!db) {
+                console.error("❌ Firestore no disponible para sincronización");
+                actualizarEstadoConexion('offline');
+                return;
+            }
             
+            // Detener escucha anterior si existe
             if (unsubscribeListener) {
                 unsubscribeListener();
             }
+            
+            console.log("🔄 Iniciando sincronización en tiempo real...");
             
             unsubscribeListener = db.collection("propiedades")
                 .orderBy("fecha_creacion", "desc")
@@ -1421,73 +1586,100 @@
                     actualizarEstadoConexion('syncing');
                     
                     if (!snapshot.empty) {
-                        propiedades = [];
+                        const nuevasPropiedades = [];
                         snapshot.forEach((doc) => {
                             const data = doc.data();
-                            propiedades.push({ 
+                            nuevasPropiedades.push({ 
                                 id: doc.id, 
                                 ...data,
-                                // Asegurar que las fechas sean strings
+                                // Convertir timestamps de Firebase a strings
                                 fecha_creacion: data.fecha_creacion ? 
-                                    (data.fecha_creacion.toDate ? data.fecha_creacion.toDate().toISOString() : data.fecha_creacion) : 
+                                    (data.fecha_creacion.toDate ? 
+                                        data.fecha_creacion.toDate().toISOString() : 
+                                        data.fecha_creacion) : 
                                     new Date().toISOString()
                             });
                         });
                         
+                        // Actualizar solo si hay cambios
+                        if (JSON.stringify(propiedades) !== JSON.stringify(nuevasPropiedades)) {
+                            propiedades = nuevasPropiedades;
+                            localStorage.setItem('jkea_propiedades', JSON.stringify(propiedades));
+                            updateAllViews();
+                            console.log(`✅ Sincronizado: ${propiedades.length} propiedades`);
+                        }
+                    } else {
+                        console.log("ℹ️ No hay propiedades en Firestore");
+                        propiedades = [];
                         localStorage.setItem('jkea_propiedades', JSON.stringify(propiedades));
                         updateAllViews();
-                        
-                        console.log(`🔄 Sincronizado: ${propiedades.length} propiedades`);
                     }
                     
                     setTimeout(() => actualizarEstadoConexion('online'), 1000);
+                    
                 }, (error) => {
-                    console.error("❌ Error en sincronización:", error);
+                    console.error("❌ Error en sincronización tiempo real:", error);
+                    console.error("Código de error:", error.code);
+                    console.error("Mensaje:", error.message);
                     actualizarEstadoConexion('offline');
                     cargarDatosLocales();
                 });
         }
 
         // =============================================
-        // FUNCIONES DE FIRESTORE
+        // FUNCIONES DE FIRESTORE - CORREGIDAS
         // =============================================
         async function guardarPropiedadEnFirebase(propiedad) {
             if (!db) {
-                guardarLocalmente(propiedad);
-                return propiedad.id;
+                console.error("❌ Firestore no disponible para guardar");
+                throw new Error("Firebase no disponible");
             }
             
             try {
                 actualizarEstadoConexion('syncing');
                 
-                let docRef;
                 const propiedadData = {
                     municipio: propiedad.municipio,
                     colonia: propiedad.colonia,
                     descripcion: propiedad.descripcion,
-                    costo_propiedad: propiedad.costo_propiedad,
-                    costo_avaluo: propiedad.costo_avaluo,
-                    costo_carta_no_propiedad: propiedad.costo_carta_no_propiedad,
+                    costo_propiedad: Number(propiedad.costo_propiedad),
+                    costo_avaluo: Number(propiedad.costo_avaluo),
+                    costo_carta_no_propiedad: Number(propiedad.costo_carta_no_propiedad),
                     google_maps_link: propiedad.google_maps_link,
                     imagen_url: propiedad.imagen_url,
-                    vendida: propiedad.vendida || false,
+                    vendida: Boolean(propiedad.vendida),
                     fecha_actualizacion: firebase.firestore.FieldValue.serverTimestamp()
                 };
                 
-                if (propiedad.id && !propiedad.id.startsWith('temp_')) {
-                    await db.collection("propiedades").doc(propiedad.id).update(propiedadData);
-                } else {
+                let docId = propiedad.id;
+                
+                // Si es una propiedad nueva (ID temporal) o no tiene ID
+                if (!propiedad.id || propiedad.id.startsWith('temp_')) {
                     propiedadData.fecha_creacion = firebase.firestore.FieldValue.serverTimestamp();
-                    docRef = await db.collection("propiedades").add(propiedadData);
-                    propiedad.id = docRef.id;
+                    const docRef = await db.collection("propiedades").add(propiedadData);
+                    docId = docRef.id;
+                    console.log("✅ Nueva propiedad creada en Firebase con ID:", docId);
+                } else {
+                    // Actualizar propiedad existente
+                    await db.collection("propiedades").doc(propiedad.id).update(propiedadData);
+                    console.log("✅ Propiedad actualizada en Firebase:", propiedad.id);
                 }
                 
-                guardarLocalmente(propiedad);
-                console.log("✅ Propiedad guardada en Firebase");
-                return propiedad.id;
+                // Actualizar localmente
+                const index = propiedades.findIndex(p => p.id === propiedad.id);
+                if (index >= 0) {
+                    propiedades[index] = { ...propiedad, id: docId };
+                } else {
+                    propiedades.push({ ...propiedad, id: docId });
+                }
+                
+                localStorage.setItem('jkea_propiedades', JSON.stringify(propiedades));
+                
+                return docId;
                 
             } catch (error) {
                 console.error("❌ Error guardando en Firebase:", error);
+                console.error("Detalles:", error.message);
                 actualizarEstadoConexion('offline');
                 throw error;
             }
@@ -1495,14 +1687,13 @@
 
         async function eliminarPropiedadEnFirebase(id) {
             if (!db) {
-                propiedades = propiedades.filter(p => p.id !== id);
-                localStorage.setItem('jkea_propiedades', JSON.stringify(propiedades));
-                return;
+                throw new Error("Firebase no disponible");
             }
             
             try {
                 await db.collection("propiedades").doc(id).delete();
-                console.log("✅ Propiedad eliminada de Firebase");
+                console.log("✅ Propiedad eliminada de Firebase:", id);
+                return true;
             } catch (error) {
                 console.error("❌ Error eliminando de Firebase:", error);
                 throw error;
@@ -1515,20 +1706,17 @@
         function cargarDatosLocales() {
             const datosLocales = localStorage.getItem('jkea_propiedades');
             if (datosLocales) {
-                propiedades = JSON.parse(datosLocales);
-                updateAllViews();
-                showNotification("⚠️ Usando datos locales", "info");
-            }
-        }
-
-        function guardarLocalmente(propiedad) {
-            const index = propiedades.findIndex(p => p.id === propiedad.id);
-            if (index >= 0) {
-                propiedades[index] = propiedad;
+                try {
+                    propiedades = JSON.parse(datosLocales);
+                    updateAllViews();
+                    showNotification("⚠️ Usando datos locales", "info");
+                } catch (error) {
+                    console.error("Error parseando datos locales:", error);
+                    propiedades = [];
+                }
             } else {
-                propiedades.push(propiedad);
+                propiedades = [];
             }
-            localStorage.setItem('jkea_propiedades', JSON.stringify(propiedades));
         }
 
         // =============================================
@@ -1543,7 +1731,7 @@
             switch(estado) {
                 case 'online':
                     badge.classList.add('connection-online');
-                    badge.innerHTML = '<i class="fas fa-cloud"></i> <span>Conectado</span>';
+                    badge.innerHTML = '<i class="fas fa-cloud"></i> <span>Conectado a Firebase</span>';
                     badge.style.display = 'flex';
                     setTimeout(() => {
                         if (badge.classList.contains('connection-online')) {
@@ -1554,13 +1742,13 @@
                     
                 case 'offline':
                     badge.classList.add('connection-offline');
-                    badge.innerHTML = '<i class="fas fa-cloud-slash"></i> <span>Sin conexión</span>';
+                    badge.innerHTML = '<i class="fas fa-cloud-slash"></i> <span>Sin conexión a Firebase</span>';
                     badge.style.display = 'flex';
                     break;
                     
                 case 'syncing':
                     badge.classList.add('connection-syncing');
-                    badge.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> <span>Sincronizando...</span>';
+                    badge.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> <span>Sincronizando con Firebase...</span>';
                     badge.style.display = 'flex';
                     break;
             }
@@ -1570,26 +1758,40 @@
         // FUNCIONES PRINCIPALES MODIFICADAS
         // =============================================
         async function agregarOEditarPropiedadFirebase(propiedadData) {
+            // Si no tiene ID, generar uno temporal
             if (!propiedadData.id) {
-                propiedadData.id = 'temp_' + Date.now();
+                propiedadData.id = 'temp_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
             }
             
             try {
                 const id = await guardarPropiedadEnFirebase(propiedadData);
-                showNotification('✅ Propiedad guardada y sincronizada');
+                showNotification('✅ Propiedad guardada y sincronizada con Firebase');
                 return id;
                 
             } catch (error) {
-                showNotification('❌ Error al guardar, pero se guardó localmente', 'error');
-                guardarLocalmente(propiedadData);
+                console.error("Error en agregarOEditarPropiedadFirebase:", error);
+                
+                // Guardar localmente como respaldo
+                const index = propiedades.findIndex(p => p.id === propiedadData.id);
+                if (index >= 0) {
+                    propiedades[index] = propiedadData;
+                } else {
+                    propiedades.push(propiedadData);
+                }
+                localStorage.setItem('jkea_propiedades', JSON.stringify(propiedades));
+                
                 updateAllViews();
+                showNotification('⚠️ Error de conexión, propiedad guardada localmente', 'info');
                 return propiedadData.id;
             }
         }
 
         async function togglePropertyStatusFirebase(id) {
             const propiedad = propiedades.find(p => p.id === id);
-            if (!propiedad) return;
+            if (!propiedad) {
+                showNotification('❌ Propiedad no encontrada', 'error');
+                return;
+            }
             
             propiedad.vendida = !propiedad.vendida;
             
@@ -1597,13 +1799,300 @@
                 await guardarPropiedadEnFirebase(propiedad);
                 showNotification(`✅ Propiedad marcada como ${propiedad.vendida ? 'vendida' : 'disponible'}`);
             } catch (error) {
-                showNotification('⚠️ Cambio guardado localmente', 'info');
+                showNotification('⚠️ Error de conexión, cambio guardado localmente', 'info');
                 updateAllViews();
             }
         }
 
         // =============================================
-        // FUNCIONES EXISTENTES (modificadas ligeramente)
+        // PANEL DE SINCRONIZACIÓN
+        // =============================================
+        function agregarPanelSincronizacion() {
+            const panelHTML = `
+                <div class="sync-section">
+                    <h3 style="margin-bottom: 20px; color: var(--primary-color);">
+                        <i class="fas fa-bolt"></i> Sincronización en Tiempo Real (Firebase)
+                    </h3>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                        <div style="background: #e8f4fc; padding: 20px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2rem; color: var(--secondary-color); margin-bottom: 10px;">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <h4>Propiedades</h4>
+                            <p style="font-size: 1.5rem; font-weight: bold; margin: 10px 0;">${propiedades.length}</p>
+                            <p style="font-size: 0.9rem; color: #666;">${db ? 'Sincronizadas' : 'Locales'}</p>
+                        </div>
+                        
+                        <div style="background: #e8f4fc; padding: 20px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2rem; color: ${db ? '#27ae60' : '#e74c3c'}; margin-bottom: 10px;">
+                                <i class="fas fa-wifi"></i>
+                            </div>
+                            <h4>Estado Firebase</h4>
+                            <p id="firebase-status" style="font-size: 1.2rem; font-weight: bold; margin: 10px 0; color: ${db ? '#27ae60' : '#e74c3c'};">
+                                ${db ? '✅ CONECTADO' : '❌ OFFLINE'}
+                            </p>
+                            <p style="font-size: 0.9rem; color: #666;">${firebaseConfig.projectId}</p>
+                        </div>
+                        
+                        <div style="background: #e8f4fc; padding: 20px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2rem; color: #9b59b6; margin-bottom: 10px;">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <h4>Base de Datos</h4>
+                            <p style="font-size: 1.5rem; font-weight: bold; margin: 10px 0;">Firestore</p>
+                            <p style="font-size: 0.9rem; color: #666;">Google Cloud</p>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px;">
+                        <button class="btn btn-primary" onclick="forzarResincronizacion()">
+                            <i class="fas fa-sync-alt"></i> Resincronizar Ahora
+                        </button>
+                        <button class="btn btn-success" onclick="exportarBackup()">
+                            <i class="fas fa-download"></i> Descargar Backup
+                        </button>
+                        <button class="btn btn-info" onclick="verificarConexionFirebase()">
+                            <i class="fas fa-network-wired"></i> Verificar Conexión
+                        </button>
+                    </div>
+                    
+                    <div class="backup-info" style="margin-top: 20px;">
+                        <p><strong><i class="fas fa-shield-alt"></i> Seguridad:</strong> Datos cifrados en servidores de Google</p>
+                        <p><strong><i class="fas fa-bolt"></i> Sincronización:</strong> Cambios en tiempo real entre dispositivos</p>
+                        <p><strong><i class="fas fa-database"></i> Respaldo:</strong> Datos guardados localmente y en la nube</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('firebase-sync-section').innerHTML = panelHTML;
+        }
+
+        function forzarResincronizacion() {
+            if (!db) {
+                showNotification('❌ Firebase no está disponible. Recargando conexión...', 'error');
+                // Intentar reinicializar Firebase
+                try {
+                    inicializarFirebase();
+                } catch (error) {
+                    showNotification('❌ No se pudo conectar a Firebase', 'error');
+                }
+                return;
+            }
+            
+            actualizarEstadoConexion('syncing');
+            iniciarSincronizacionTiempoReal();
+            showNotification('🔄 Resincronizando con Firebase...', 'info');
+        }
+
+        function verificarConexionFirebase() {
+            if (!db) {
+                showNotification('❌ Firebase NO está inicializado', 'error');
+                console.error("Firebase db es:", db);
+                console.error("Firebase app es:", firebaseApp);
+                return;
+            }
+            
+            // Intentar una operación simple para verificar conexión
+            db.collection("propiedades").limit(1).get()
+                .then(() => {
+                    showNotification('✅ Conexión a Firebase verificada correctamente', 'success');
+                    console.log("✅ Conexión Firebase OK");
+                })
+                .catch((error) => {
+                    showNotification('❌ Error de conexión a Firebase', 'error');
+                    console.error("Error verificando conexión:", error);
+                });
+        }
+
+        function exportarBackup() {
+            const datosCompletos = {
+                propiedades: propiedades,
+                usuarios: usuarios,
+                metadata: {
+                    fecha_exportacion: new Date().toISOString(),
+                    total_propiedades: propiedades.length,
+                    proyecto_firebase: firebaseConfig.projectId,
+                    version: '2.0-firebase'
+                }
+            };
+            
+            const jsonString = JSON.stringify(datosCompletos, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `jkea_backup_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification('✅ Backup descargado localmente');
+        }
+
+        // =============================================
+        // FUNCIONES DE PROPIEDADES (MODALES)
+        // =============================================
+        function showAddPropertyModal() {
+            document.getElementById('propertyForm').reset();
+            document.getElementById('modal-vendida').checked = false;
+            document.getElementById('image-preview').style.display = 'none';
+            document.getElementById('modal-imagen-url').value = '';
+            currentPropertyId = null;
+            currentImageUrl = '';
+            document.getElementById('modal-title').innerHTML = '<i class="fas fa-plus-circle"></i> Nueva Propiedad';
+            document.getElementById('propertyModal').classList.add('active');
+        }
+
+        function showAddUserModal() {
+            const adminCount = usuarios.filter(u => u.es_admin).length;
+            if (adminCount >= 3) {
+                showNotification('❌ Máximo 3 administradores permitidos', 'error');
+                return;
+            }
+            
+            document.getElementById('userForm').reset();
+            document.getElementById('user-admin').checked = false;
+            document.getElementById('userModal').classList.add('active');
+        }
+
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('image-preview');
+            
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    currentImageUrl = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function editProperty(id) {
+            const propiedad = propiedades.find(p => p.id === id);
+            if (!propiedad) {
+                showNotification('❌ Propiedad no encontrada', 'error');
+                return;
+            }
+            
+            document.getElementById('modal-municipio').value = propiedad.municipio || '';
+            document.getElementById('modal-colonia').value = propiedad.colonia ? propiedad.colonia.replace(/<br>/g, ' ') : '';
+            document.getElementById('modal-descripcion').value = propiedad.descripcion || '';
+            document.getElementById('modal-precio').value = propiedad.costo_propiedad || '';
+            document.getElementById('modal-avaluo').value = propiedad.costo_avaluo || '';
+            document.getElementById('modal-carta').value = propiedad.costo_carta_no_propiedad || '';
+            document.getElementById('modal-maps').value = propiedad.google_maps_link || '';
+            document.getElementById('modal-vendida').checked = Boolean(propiedad.vendida);
+            
+            currentImageUrl = propiedad.imagen_url || '';
+            currentPropertyId = id;
+            
+            const preview = document.getElementById('image-preview');
+            if (propiedad.imagen_url) {
+                preview.src = propiedad.imagen_url;
+                preview.style.display = 'block';
+            } else {
+                preview.style.display = 'none';
+            }
+            
+            document.getElementById('modal-title').innerHTML = '<i class="fas fa-edit"></i> Editar Propiedad';
+            document.getElementById('propertyModal').classList.add('active');
+        }
+
+        // Formulario de propiedad
+        document.getElementById('propertyForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Validar imagen
+            if (!currentImageUrl) {
+                showNotification('❌ Debes subir una imagen de la propiedad', 'error');
+                return;
+            }
+            
+            const propiedad = {
+                id: currentPropertyId,
+                municipio: document.getElementById('modal-municipio').value,
+                colonia: document.getElementById('modal-colonia').value,
+                descripcion: document.getElementById('modal-descripcion').value,
+                costo_propiedad: parseFloat(document.getElementById('modal-precio').value) || 0,
+                costo_avaluo: parseFloat(document.getElementById('modal-avaluo').value) || 0,
+                costo_carta_no_propiedad: parseFloat(document.getElementById('modal-carta').value) || 0,
+                google_maps_link: document.getElementById('modal-maps').value,
+                imagen_url: currentImageUrl,
+                vendida: document.getElementById('modal-vendida').checked,
+                fecha_creacion: currentPropertyId ? 
+                    (propiedades.find(p => p.id === currentPropertyId)?.fecha_creacion || new Date().toISOString()) : 
+                    new Date().toISOString()
+            };
+            
+            try {
+                await agregarOEditarPropiedadFirebase(propiedad);
+                closeModal();
+            } catch (error) {
+                console.error('Error guardando propiedad:', error);
+            }
+        });
+
+        // Formulario de usuario
+        document.getElementById('userForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nombre = document.getElementById('user-name').value;
+            const email = document.getElementById('user-email').value;
+            const password = document.getElementById('user-password').value;
+            const confirmPassword = document.getElementById('user-confirm').value;
+            const esAdmin = document.getElementById('user-admin').checked;
+            
+            // Validaciones
+            if (password !== confirmPassword) {
+                showNotification('❌ Las contraseñas no coinciden', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showNotification('❌ La contraseña debe tener al menos 6 caracteres', 'error');
+                return;
+            }
+            
+            // Verificar si el email ya existe
+            if (usuarios.some(u => u.email === email)) {
+                showNotification('❌ Este email ya está registrado', 'error');
+                return;
+            }
+            
+            // Verificar límite de administradores
+            if (esAdmin) {
+                const adminCount = usuarios.filter(u => u.es_admin).length;
+                if (adminCount >= 3) {
+                    showNotification('❌ Máximo 3 administradores permitidos', 'error');
+                    return;
+                }
+            }
+            
+            const nuevoUsuario = {
+                id: usuarios.length > 0 ? Math.max(...usuarios.map(u => u.id)) + 1 : 1,
+                nombre: nombre,
+                email: email,
+                password: password,
+                es_admin: esAdmin,
+                activo: true
+            };
+            
+            usuarios.push(nuevoUsuario);
+            localStorage.setItem('jkea_usuarios', JSON.stringify(usuarios));
+            
+            loadAdminPanel();
+            showNotification('✅ Usuario creado exitosamente');
+            closeUserModal();
+        });
+
+        // =============================================
+        // FUNCIONES EXISTENTES (sin cambios)
         // =============================================
         function showSection(sectionId) {
             if (window.innerWidth <= 768) {
@@ -1754,7 +2243,7 @@
             container.innerHTML = props.map(prop => `
                 <div class="property-card">
                     <div class="property-image">
-                        <img src="${prop.imagen_url}" alt="Propiedad en ${prop.municipio}" loading="lazy">
+                        <img src="${prop.imagen_url || 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'}" alt="Propiedad en ${prop.municipio}" loading="lazy">
                         <span class="property-badge ${prop.vendida ? 'badge-sold' : 'badge-available'}">
                             ${prop.vendida ? 'VENDIDA' : 'DISPONIBLE'}
                         </span>
@@ -1762,36 +2251,36 @@
                     
                     <div class="property-info">
                         <div class="property-title">
-                            ${prop.municipio}
+                            ${prop.municipio || 'Sin municipio'}
                             ${prop.vendida ? '<i class="fas fa-check-circle" style="color: #27ae60;"></i>' : ''}
                         </div>
                         
                         <p class="property-detail">
-                            <strong><i class="fas fa-map-marker-alt"></i> Colonia:</strong> ${prop.colonia}
+                            <strong><i class="fas fa-map-marker-alt"></i> Colonia:</strong> ${prop.colonia || 'Sin colonia'}
                         </p>
                         
                         <p class="property-detail">
                             <strong><i class="fas fa-file-alt"></i> Descripción:</strong><br>
-                            ${prop.descripcion.replace(/\n/g, '<br>')}
+                            ${(prop.descripcion || 'Sin descripción').replace(/\n/g, '<br>')}
                         </p>
                         
                         <div class="property-prices">
                             <div class="price-item">
                                 <span><i class="fas fa-dollar-sign"></i> Precio:</span>
-                                <span class="price-value">$${prop.costo_propiedad.toLocaleString('es-MX')}</span>
+                                <span class="price-value">$${(prop.costo_propiedad || 0).toLocaleString('es-MX')}</span>
                             </div>
                             <div class="price-item">
                                 <span><i class="fas fa-file-invoice-dollar"></i> Avalúo:</span>
-                                <span class="price-value">$${prop.costo_avaluo.toLocaleString('es-MX')}</span>
+                                <span class="price-value">$${(prop.costo_avaluo || 0).toLocaleString('es-MX')}</span>
                             </div>
                             <div class="price-item">
                                 <span><i class="fas fa-file-contract"></i> Carta:</span>
-                                <span class="price-value">$${prop.costo_carta_no_propiedad.toLocaleString('es-MX')}</span>
+                                <span class="price-value">$${(prop.costo_carta_no_propiedad || 0).toLocaleString('es-MX')}</span>
                             </div>
                         </div>
                         
                         <div class="property-actions">
-                            <a href="${prop.google_maps_link}" target="_blank" class="action-btn btn-map">
+                            <a href="${prop.google_maps_link || '#'}" target="_blank" class="action-btn btn-map">
                                 <i class="fas fa-map-marked-alt"></i> Ver en Maps
                             </a>
                             
@@ -1810,10 +2299,10 @@
         }
 
         function downloadImage(imageUrl, propertyName) {
-            if (imageUrl.startsWith('data:')) {
+            if (!imageUrl || imageUrl.startsWith('data:')) {
                 const link = document.createElement('a');
-                link.href = imageUrl;
-                link.download = `propiedad_${propertyName}_${Date.now()}.jpg`;
+                link.href = imageUrl || 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80';
+                link.download = `propiedad_${propertyName || 'sin-nombre'}_${Date.now()}.jpg`;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
@@ -1828,20 +2317,20 @@
             if (!propiedad) return;
             
             const textToCopy = `
-MUNICIPIO: ${propiedad.municipio}
+MUNICIPIO: ${propiedad.municipio || 'Sin municipio'}
 
-COLONIA: ${propiedad.colonia.replace(/<br>/g, ' ')}
+COLONIA: ${(propiedad.colonia || 'Sin colonia').replace(/<br>/g, ' ')}
 
 DESCRIPCIÓN:
-${propiedad.descripcion}
+${propiedad.descripcion || 'Sin descripción'}
 
-COSTO DE LA PROPIEDAD: $${propiedad.costo_propiedad.toLocaleString('es-MX')}
+COSTO DE LA PROPIEDAD: $${(propiedad.costo_propiedad || 0).toLocaleString('es-MX')}
 
-COSTO DEL AVALÚO: $${propiedad.costo_avaluo.toLocaleString('es-MX')}
+COSTO DEL AVALÚO: $${(propiedad.costo_avaluo || 0).toLocaleString('es-MX')}
 
-COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleString('es-MX')}
+COSTO DE CARTA DE NO PROPIEDAD: $${(propiedad.costo_carta_no_propiedad || 0).toLocaleString('es-MX')}
 
-👉 VER UBICACIÓN EN GOOGLE MAPS: ${propiedad.google_maps_link}
+👉 VER UBICACIÓN EN GOOGLE MAPS: ${propiedad.google_maps_link || 'No disponible'}
             `.trim();
             
             if (navigator.clipboard) {
@@ -1881,10 +2370,11 @@ COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleSt
                     showSection('admin');
                     showNotification('✅ ¡Bienvenido Administrador!');
                     
+                    // Intentar autenticar en Firebase
                     if (auth) {
-                        auth.signInWithEmailAndPassword(email, password).catch(error => {
-                            console.warn("No se pudo autenticar con Firebase:", error);
-                        });
+                        auth.signInWithEmailAndPassword(email, password)
+                            .then(() => console.log("✅ Admin autenticado en Firebase"))
+                            .catch(error => console.warn("⚠️ No se pudo autenticar admin en Firebase:", error));
                     }
                 } else {
                     showNotification('❌ Solo los administradores pueden acceder', 'error');
@@ -1915,7 +2405,6 @@ COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleSt
             const total = propiedades.length;
             const disponibles = propiedades.filter(p => !p.vendida).length;
             const vendidas = propiedades.filter(p => p.vendida).length;
-            const admins = usuarios.filter(u => u.es_admin).length;
             
             document.getElementById('admin-total').textContent = total;
             document.getElementById('admin-available').textContent = disponibles;
@@ -1927,13 +2416,13 @@ COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleSt
             const table = document.getElementById('admin-properties-table');
             table.innerHTML = propiedades.map(prop => `
                 <tr>
-                    <td>${prop.id.substring(0, 8)}...</td>
+                    <td>${prop.id ? prop.id.substring(0, 8) + '...' : 'N/A'}</td>
                     <td>
-                        <img src="${prop.imagen_url}" style="width: 60px; height: 40px; object-fit: cover; border-radius: 4px;" alt="Imagen">
+                        <img src="${prop.imagen_url || 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'}" style="width: 60px; height: 40px; object-fit: cover; border-radius: 4px;" alt="Imagen">
                     </td>
-                    <td>${prop.municipio}</td>
-                    <td>${prop.colonia.replace(/<br>/g, ' ')}</td>
-                    <td>$${prop.costo_propiedad.toLocaleString('es-MX')}</td>
+                    <td>${prop.municipio || 'Sin municipio'}</td>
+                    <td>${prop.colonia ? prop.colonia.replace(/<br>/g, ' ') : 'Sin colonia'}</td>
+                    <td>$${(prop.costo_propiedad || 0).toLocaleString('es-MX')}</td>
                     <td>
                         <span class="status-badge" style="background: ${prop.vendida ? '#fdeaea' : '#d5f4e6'}; color: ${prop.vendida ? '#e74c3c' : '#27ae60'}">
                             ${prop.vendida ? 'Vendida' : 'Disponible'}
@@ -1956,101 +2445,6 @@ COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleSt
             `).join('');
             
             agregarPanelSincronizacion();
-        }
-
-        function agregarPanelSincronizacion() {
-            const panelHTML = `
-                <div class="sync-section">
-                    <h3 style="margin-bottom: 20px; color: var(--primary-color);">
-                        <i class="fas fa-bolt"></i> Sincronización en Tiempo Real (Firebase)
-                    </h3>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 20px;">
-                        <div style="background: #e8f4fc; padding: 20px; border-radius: 8px; text-align: center;">
-                            <div style="font-size: 2rem; color: var(--secondary-color); margin-bottom: 10px;">
-                                <i class="fas fa-home"></i>
-                            </div>
-                            <h4>Propiedades</h4>
-                            <p style="font-size: 1.5rem; font-weight: bold; margin: 10px 0;">${propiedades.length}</p>
-                            <p style="font-size: 0.9rem; color: #666;">Sincronizadas</p>
-                        </div>
-                        
-                        <div style="background: #e8f4fc; padding: 20px; border-radius: 8px; text-align: center;">
-                            <div style="font-size: 2rem; color: ${db ? '#27ae60' : '#e74c3c'}; margin-bottom: 10px;">
-                                <i class="fas fa-wifi"></i>
-                            </div>
-                            <h4>Estado</h4>
-                            <p id="firebase-status" style="font-size: 1.2rem; font-weight: bold; margin: 10px 0; color: ${db ? '#27ae60' : '#e74c3c'};">
-                                ${db ? 'CONECTADO' : 'OFFLINE'}
-                            </p>
-                            <p style="font-size: 0.9rem; color: #666;">Conexión Firebase</p>
-                        </div>
-                        
-                        <div style="background: #e8f4fc; padding: 20px; border-radius: 8px; text-align: center;">
-                            <div style="font-size: 2rem; color: #9b59b6; margin-bottom: 10px;">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <h4>Dispositivos</h4>
-                            <p style="font-size: 1.5rem; font-weight: bold; margin: 10px 0;">Activos</p>
-                            <p style="font-size: 0.9rem; color: #666;">Sincronizando</p>
-                        </div>
-                    </div>
-                    
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px;">
-                        <button class="btn btn-primary" onclick="forzarResincronizacion()">
-                            <i class="fas fa-sync-alt"></i> Resincronizar Ahora
-                        </button>
-                        <button class="btn btn-success" onclick="exportarBackup()">
-                            <i class="fas fa-download"></i> Descargar Backup
-                        </button>
-                    </div>
-                    
-                    <div class="backup-info" style="margin-top: 20px;">
-                        <p><strong><i class="fas fa-shield-alt"></i> Seguridad:</strong> Datos cifrados en servidores de Google</p>
-                        <p><strong><i class="fas fa-bolt"></i> Latencia:</strong> Cambios se ven en < 2 segundos en otros dispositivos</p>
-                        <p><strong><i class="fas fa-database"></i> Backup Automático:</strong> Datos guardados localmente y en la nube</p>
-                    </div>
-                </div>
-            `;
-            
-            document.getElementById('firebase-sync-section').innerHTML = panelHTML;
-        }
-
-        function forzarResincronizacion() {
-            if (!db) {
-                showNotification('❌ Firebase no está disponible', 'error');
-                return;
-            }
-            
-            actualizarEstadoConexion('syncing');
-            iniciarSincronizacionTiempoReal();
-            showNotification('🔄 Resincronizando con la nube...', 'info');
-        }
-
-        function exportarBackup() {
-            const datosCompletos = {
-                propiedades: propiedades,
-                usuarios: usuarios,
-                metadata: {
-                    fecha_exportacion: new Date().toISOString(),
-                    total_propiedades: propiedades.length,
-                    version: '2.0-firebase'
-                }
-            };
-            
-            const jsonString = JSON.stringify(datosCompletos, null, 2);
-            const blob = new Blob([jsonString], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `jkea_backup_${new Date().toISOString().split('T')[0]}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            
-            showNotification('✅ Backup descargado localmente');
         }
 
         function loadUsersList() {
@@ -2077,94 +2471,6 @@ COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleSt
             `).join('');
         }
 
-        // =============================================
-        // FUNCIONES DE PROPIEDADES
-        // =============================================
-        function showAddPropertyModal() {
-            document.getElementById('propertyForm').reset();
-            document.getElementById('modal-vendida').checked = false;
-            document.getElementById('image-preview').style.display = 'none';
-            document.getElementById('modal-imagen-url').value = '';
-            currentPropertyId = null;
-            currentImageUrl = '';
-            document.getElementById('modal-title').innerHTML = '<i class="fas fa-plus-circle"></i> Nueva Propiedad';
-            document.getElementById('propertyModal').classList.add('active');
-        }
-
-        function previewImage(event) {
-            const file = event.target.files[0];
-            const preview = document.getElementById('image-preview');
-            
-            if (file && file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                    currentImageUrl = e.target.result;
-                }
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function editProperty(id) {
-            const propiedad = propiedades.find(p => p.id === id);
-            if (!propiedad) return;
-            
-            document.getElementById('modal-municipio').value = propiedad.municipio;
-            document.getElementById('modal-colonia').value = propiedad.colonia.replace(/<br>/g, ' ');
-            document.getElementById('modal-descripcion').value = propiedad.descripcion;
-            document.getElementById('modal-precio').value = propiedad.costo_propiedad;
-            document.getElementById('modal-avaluo').value = propiedad.costo_avaluo;
-            document.getElementById('modal-carta').value = propiedad.costo_carta_no_propiedad;
-            document.getElementById('modal-maps').value = propiedad.google_maps_link;
-            document.getElementById('modal-vendida').checked = propiedad.vendida;
-            
-            currentImageUrl = propiedad.imagen_url;
-            
-            const preview = document.getElementById('image-preview');
-            preview.src = propiedad.imagen_url;
-            preview.style.display = 'block';
-            
-            currentPropertyId = id;
-            document.getElementById('modal-title').innerHTML = '<i class="fas fa-edit"></i> Editar Propiedad';
-            document.getElementById('propertyModal').classList.add('active');
-        }
-
-        document.getElementById('propertyForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const preview = document.getElementById('image-preview');
-            if (!currentImageUrl && preview.style.display === 'none') {
-                showNotification('❌ Debes subir una imagen', 'error');
-                return;
-            }
-            
-            const imagenUrl = currentImageUrl;
-            
-            const propiedad = {
-                id: currentPropertyId || 'temp_' + Date.now(),
-                municipio: document.getElementById('modal-municipio').value,
-                colonia: document.getElementById('modal-colonia').value,
-                descripcion: document.getElementById('modal-descripcion').value,
-                costo_propiedad: parseFloat(document.getElementById('modal-precio').value),
-                costo_avaluo: parseFloat(document.getElementById('modal-avaluo').value),
-                costo_carta_no_propiedad: parseFloat(document.getElementById('modal-carta').value),
-                google_maps_link: document.getElementById('modal-maps').value,
-                imagen_url: imagenUrl,
-                vendida: document.getElementById('modal-vendida').checked,
-                fecha_creacion: currentPropertyId ? 
-                    propiedades.find(p => p.id === currentPropertyId)?.fecha_creacion || new Date().toISOString() :
-                    new Date().toISOString()
-            };
-            
-            try {
-                await agregarOEditarPropiedadFirebase(propiedad);
-                closeModal();
-            } catch (error) {
-                console.error('Error guardando propiedad:', error);
-            }
-        });
-
         function updateAllViews() {
             loadHomeProperties();
             loadSoldProperties();
@@ -2183,14 +2489,19 @@ COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleSt
             
             deletePropertyId = id;
             document.getElementById('confirm-message').textContent = 
-                `¿Estás seguro de eliminar la propiedad #${id.substring(0, 8)}... - ${propiedad.municipio}, ${propiedad.colonia.replace(/<br>/g, ' ')}?`;
+                `¿Estás seguro de eliminar la propiedad "${propiedad.municipio}, ${propiedad.colonia ? propiedad.colonia.replace(/<br>/g, ' ') : 'Sin colonia'}"?`;
             document.getElementById('confirm-action-btn').onclick = deleteProperty;
             document.getElementById('confirmModal').classList.add('active');
         }
 
         async function deleteProperty() {
+            if (!deletePropertyId) return;
+            
             try {
-                await eliminarPropiedadEnFirebase(deletePropertyId);
+                if (db) {
+                    await eliminarPropiedadEnFirebase(deletePropertyId);
+                }
+                
                 propiedades = propiedades.filter(p => p.id !== deletePropertyId);
                 localStorage.setItem('jkea_propiedades', JSON.stringify(propiedades));
                 
@@ -2198,6 +2509,7 @@ COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleSt
                 showNotification('✅ Propiedad eliminada exitosamente');
                 closeConfirmModal();
             } catch (error) {
+                console.error('Error eliminando propiedad:', error);
                 showNotification('❌ Error eliminando propiedad', 'error');
                 closeConfirmModal();
             }
@@ -2265,25 +2577,31 @@ COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleSt
         }
 
         // =============================================
-        // INICIALIZACIÓN
+        // INICIALIZACIÓN COMPLETA
         // =============================================
         document.addEventListener('DOMContentLoaded', function() {
+            console.log("🚀 Iniciando JKEA Inmobiliaria...");
+            
+            // 1. Inicializar Firebase
             inicializarFirebase();
             
+            // 2. Configurar detección de conexión
             window.addEventListener('online', () => {
+                console.log("🌐 Conexión a internet restablecida");
                 actualizarEstadoConexion('online');
                 setTimeout(() => forzarResincronizacion(), 2000);
             });
             
             window.addEventListener('offline', () => {
+                console.warn("⚠️ Pérdida de conexión a internet");
                 actualizarEstadoConexion('offline');
                 showNotification('⚠️ Sin conexión a internet', 'info');
             });
             
-            if (!db) {
-                cargarDatosLocales();
-            }
+            // 3. Cargar datos iniciales
+            cargarDatosLocales();
             
+            // 4. Configurar eventos de modales
             document.querySelectorAll('.modal').forEach(modal => {
                 modal.addEventListener('click', function(e) {
                     if (e.target === this) {
@@ -2299,6 +2617,7 @@ COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleSt
                 });
             });
             
+            // 5. Configurar menú móvil
             document.addEventListener('click', function(e) {
                 const navMenu = document.getElementById('navMenu');
                 const hamburger = document.querySelector('.hamburger');
@@ -2315,6 +2634,7 @@ COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleSt
                 }
             });
             
+            // 6. Configurar responsive
             window.addEventListener('resize', function() {
                 if (window.innerWidth > 768) {
                     const navMenu = document.getElementById('navMenu');
@@ -2325,6 +2645,8 @@ COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleSt
                     spans[2].style.transform = 'none';
                 }
             });
+            
+            console.log("✅ JKEA Inmobiliaria iniciada correctamente");
         });
 
         // Agregar FontAwesome dinámicamente
