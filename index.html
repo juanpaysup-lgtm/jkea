@@ -764,15 +764,6 @@
             font-size: 1rem;
         }
 
-        .demo-creds {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 6px;
-            margin-top: 20px;
-            font-size: 0.9rem;
-            text-align: center;
-        }
-
         /* GESTIÓN DE USUARIOS */
         .user-card {
             background: white;
@@ -1141,12 +1132,6 @@
                         <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
                     </button>
                 </form>
-
-                <div class="demo-creds">
-                    <p><strong>Administrador Principal:</strong></p>
-                    <p>Email: <strong>admin@jkea.com</strong></p>
-                    <p>Contraseña: <strong>Admin123</strong></p>
-                </div>
 
                 <div style="text-align: center; margin-top: 20px;">
                     <button class="btn btn-secondary" onclick="showSection('home')">
@@ -2134,10 +2119,6 @@ COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleSt
             // Cargar datos iniciales
             loadHomeProperties();
             
-            // Auto-completar credenciales para pruebas
-            document.getElementById('login-email').value = 'admin@jkea.com';
-            document.getElementById('login-password').value = 'Admin123';
-            
             // Configurar eventos para cerrar modales
             document.querySelectorAll('.modal').forEach(modal => {
                 modal.addEventListener('click', function(e) {
@@ -2184,10 +2165,6 @@ COSTO DE CARTA DE NO PROPIEDAD: $${propiedad.costo_carta_no_propiedad.toLocaleSt
                     spans[2].style.transform = 'none';
                 }
             });
-            
-            // Log para debug
-            console.log('Propiedades cargadas:', propiedades.length);
-            console.log('Usuarios cargados:', usuarios.length);
         });
 
         // Agregar FontAwesome dinámicamente
